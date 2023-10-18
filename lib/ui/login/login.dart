@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
-import 'package:vacas_front/pagina2ejemplo.dart';
-import 'package:vacas_front/rem_pass.dart';
+import 'package:vacas_front/ui/pagina2ejemplo.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,11 +14,14 @@ class LoginPageState extends State<LoginPage> {
 
   late TextEditingController _controller;
   late TextEditingController _controller2;
+
+  bool passwordVisible = false;
   @override
   void initState() {
     _controller = TextEditingController(text: '');
     _controller2 = TextEditingController(text: '');
     super.initState();
+    passwordVisible = true;
   }
 
   @override
@@ -33,7 +35,7 @@ class LoginPageState extends State<LoginPage> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Colors.grey.shade200,
         elevation: 0,
       ),
       body: Container(
@@ -93,9 +95,22 @@ class LoginPageState extends State<LoginPage> {
                     FadeAnimation(
                         1.3,
                         TextFormField(
+                            obscureText: passwordVisible,
                             controller: _controller2,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.password),
+                                suffixIcon: IconButton(
+                                  icon: Icon(passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(
+                                      () {
+                                        passwordVisible = !passwordVisible;
+                                      },
+                                    );
+                                  },
+                                ),
                                 border: OutlineInputBorder(),
                                 //hintText: '******',
                                 label: Text('Contraseña')),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
-import 'package:vacas_front/login.dart';
+import 'package:vacas_front/ui/login/login.dart';
 
 class HomePage extends StatelessWidget {
   @override

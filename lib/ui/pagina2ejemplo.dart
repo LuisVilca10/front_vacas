@@ -18,13 +18,6 @@ class SegundaPagina extends StatefulWidget {
 class _SegundaPaginaState extends State<SegundaPagina> {
   @override
   Widget build(BuildContext context) {
-    SegundaPaginaArgumentos argumentos;
-    if (ModalRoute.of(context)?.settings.arguments != null) {
-      argumentos =
-          ModalRoute.of(context)?.settings.arguments as SegundaPaginaArgumentos;
-    } else {
-      argumentos = SegundaPaginaArgumentos();
-    }
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
