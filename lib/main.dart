@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vacas_front/ui/login/welcome.dart';
+import 'package:vacas_front/ui/login/login.dart';
 
 //const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
@@ -13,11 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Demo Flutter',
+      title: 'FinkaRED',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: MainLogin(),
     );
   }
 }
