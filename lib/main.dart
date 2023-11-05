@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vacas_front/ui/login/login.dart';
+import 'package:vacas_front/ui/dashboard.dart';
+import 'package:google_fonts/google_fonts.dart';
+//import 'package:vacas_front/ui/login/login.dart';
 
 //const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
@@ -15,10 +17,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FinkaRED',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+            .apply(bodyColor: Colors.black87),
+        canvasColor: Color.fromARGB(217, 217, 217, 217),
       ),
-      home: MainLogin(),
+      home: Dashboard(),
     );
   }
 }

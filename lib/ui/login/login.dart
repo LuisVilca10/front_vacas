@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
 import 'package:vacas_front/apis/usuario_api.dart';
 import 'package:vacas_front/modelo/UsuarioModelo.dart';
-import 'package:vacas_front/ui/pagina2ejemplo.dart';
+import 'package:vacas_front/ui/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      SegundaPagina()));
+                                                      Dashboard()));
                                         }
                                       }).catchError((onError) {
                                         print(onError.toString());
