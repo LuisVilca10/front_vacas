@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vacas_front/ui/dashboard.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vacas_front/ui/email_login_page.dart';
 //import 'package:vacas_front/ui/login/login.dart';
 
 //const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.black87),
         canvasColor: Color.fromARGB(217, 217, 217, 217),
       ),
-      home: Dashboard(),
+      home: EmailLoginPage(),
     );
   }
 }
