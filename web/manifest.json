@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "vacaspruebas",
     "short_name": "vacaspruebas",
+=======
+    "name": "vacas_front",
+    "short_name": "vacas_front",
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

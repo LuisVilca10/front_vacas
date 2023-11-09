@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+<<<<<<< HEAD
         android:label="vacaspruebas"
+=======
+        android:label="vacas_front"
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

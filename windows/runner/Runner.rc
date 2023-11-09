@@ -90,12 +90,21 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
+<<<<<<< HEAD
             VALUE "FileDescription", "vacaspruebas" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "vacaspruebas" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "vacaspruebas.exe" "\0"
             VALUE "ProductName", "vacaspruebas" "\0"
+=======
+            VALUE "FileDescription", "vacas_front" "\0"
+            VALUE "FileVersion", VERSION_AS_STRING "\0"
+            VALUE "InternalName", "vacas_front" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
+            VALUE "OriginalFilename", "vacas_front.exe" "\0"
+            VALUE "ProductName", "vacas_front" "\0"
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

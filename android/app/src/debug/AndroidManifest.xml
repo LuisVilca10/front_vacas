@@ -4,6 +4,9 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+<<<<<<< HEAD
     <uses-sdk android:minSdkVersion="22" />
 
+=======
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
 </manifest>

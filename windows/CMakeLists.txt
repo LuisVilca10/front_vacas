@@ -1,10 +1,18 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
+<<<<<<< HEAD
 project(vacaspruebas LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
 set(BINARY_NAME "vacaspruebas")
+=======
+project(vacas_front LANGUAGES CXX)
+
+# The name of the executable created for the application. Change this to change
+# the on-disk name of your application.
+set(BINARY_NAME "vacas_front")
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

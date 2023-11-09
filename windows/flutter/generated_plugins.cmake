@@ -4,8 +4,16 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   cloud_firestore
+<<<<<<< HEAD
   firebase_core
   geolocator_windows
+=======
+  file_selector_windows
+  firebase_core
+  geolocator_windows
+  share_plus
+  url_launcher_windows
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

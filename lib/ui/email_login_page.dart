@@ -3,7 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+<<<<<<< HEAD
 import 'package:vacaspruebas/animation/FadeAnimation.dart';
+=======
+import 'package:vacas_front/animation/FadeAnimation.dart';
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
 
 class EmailLoginPage extends StatefulWidget {
   @override
@@ -52,7 +56,11 @@ class EmailLoginPageState extends State<EmailLoginPage> {
         ),
         automaticallyImplyLeading: false,
         centerTitle: true,
+<<<<<<< HEAD
         backgroundColor: Colors.white,
+=======
+        backgroundColor: Colors.transparent,
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
         elevation: 0,
         leading: IconButton(
           icon: const Icon(

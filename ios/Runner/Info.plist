@@ -5,7 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
+<<<<<<< HEAD
 	<string>Vacaspruebas</string>
+=======
+	<string>Vacas Front</string>
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +17,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
+<<<<<<< HEAD
 	<string>vacaspruebas</string>
+=======
+	<string>vacas_front</string>
+>>>>>>> 6fac0a550ff4b02b5324cf66f8273fedcd064f7c
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
