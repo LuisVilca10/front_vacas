@@ -13,6 +13,7 @@ import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/ui/finca/MyAppState.dart';
 import 'package:vacas_front/ui/finca/finca_edit.dart';
 import 'package:vacas_front/ui/finca/finca_form.dart';
+import 'package:vacas_front/ui/usuario/usuario_main.dart';
 //import 'package:vacas_front/ui/finca/finca_form.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 import '../help_screen.dart';
@@ -146,401 +147,252 @@ class _FincaUIState extends State<FincaUI> {
 
   Widget _buildListView(BuildContext context, List<FincaModelo> persona) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          FincaModelo personax = persona[index];
-          return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+      // child: ListView.builder(
+      //   itemBuilder: (context, index) {
+      //     FincaModelo personax = persona[index];
+      child: Column(
+        children: [
+          SizedBox(
+            height: 3,
+          ),
+          Container(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 3,
-                ),
                 Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          height: 40,
-                          width: double.infinity,
-                          child: FadeAnimation(
-                              0.5,
-                              TextField(
-                                cursorColor: Color.fromARGB(124, 124, 124, 124),
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: Colors.black54,
-                                    size: 30,
-                                  ),
-                                  hintText: "Search",
-                                  fillColor: Color.fromARGB(217, 217, 217, 217),
-                                  filled: true,
-                                  border: UnderlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ))),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Column(
-                        children: [
-                          FadeAnimation(
-                            0.5,
-                            Text(
-                              "Mis Fincas",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                FadeAnimation(
-                  0.5,
-                  Container(
-                    height: 130,
-                    padding: EdgeInsets.all(5.0),
+                    height: 40,
                     width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 3, vertical: 10),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              "https://cdnx.jumpseller.com/3841/image/34731799/WhatsApp_Image_2023-02-16_at_12.55.44.jpeg?1683039580")),
-                      borderRadius: BorderRadius.circular(8),
-                      color: Color.fromARGB(217, 217, 217, 217),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(personax.nombreFinca,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20)),
-                            Text(personax.telefono,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15)),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FincaFormEdit(modelA: personax)),
-                                ).then(onGoBack);
-                              },
-                              child: Text(
-                                "Editar",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(80))),
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.white),
-                              ),
+                    child: FadeAnimation(
+                        0.5,
+                        TextField(
+                          cursorColor: Color.fromARGB(124, 124, 124, 124),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.black54,
+                              size: 30,
                             ),
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text("Mensaje de confirmacion"),
-                                        content: Text("Desea Eliminar?"),
-                                        actions: [
-                                          FloatingActionButton(
-                                            child: const Text('CANCEL'),
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .pop('Failure');
-                                            },
-                                          ),
-                                          FloatingActionButton(
-                                              child: const Text('ACCEPT'),
-                                              onPressed: () {
-                                                Navigator.of(context)
-                                                    .pop('Success');
-                                              })
-                                        ],
-                                      );
-                                    }).then((value) {
-                                  if (value.toString() == "Success") {
-                                    print(personax.id);
-                                    Provider.of<FincaApi>(context,
-                                            listen: false)
-                                        .deleteFinca(
-                                            TokenUtil.TOKEN, personax.id)
-                                        .then((value) => onGoBack(value));
-                                    //var onGoBack = onGoBack;
-                                    //BlocProvider.of<ProductosBloc>(context).add(DeleteProductoEvent(producto: state.productosList[index]));
-                                  }
-                                });
-                              },
-                              child: Text(
-                                "Eliminar", // a futuro "ver"
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(80))),
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.white),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                            hintText: "Search",
+                            fillColor: Color.fromARGB(217, 217, 217, 217),
+                            filled: true,
+                            border: UnderlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ))),
+                SizedBox(
+                  height: 15,
                 ),
-                FadeAnimation(
-                  0.5,
-                  Card(
-                    child: Container(
-                      height: 100,
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          ListTile(
-                              title: Row(
-                                children: [
-                                  Container(
-                                    child: Text(personax.nombreFinca,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium),
-                                  )
-                                ],
-                              ),
-                              subtitle: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          color: AppTheme.themeData.colorScheme
-                                              .primaryContainer),
-                                      child: Text(
-                                        personax.telefono == "A"
-                                            ? "Activo"
-                                            : "Desactivo",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 16),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          color: AppTheme.themeData.colorScheme
-                                              .primaryContainer),
-                                      child: Text(
-                                        //personax.asistenciaxs.isEmpty? personax.evaluar:personax.asistenciaxs.first.horaReg,
-                                        personax.latitud,
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 16),
-                                      ),
-                                    ),
-                                  ]),
-                              leading: CircleAvatar(
-                                backgroundImage:
-                                    AssetImage("assets/imagen/man-icon.png"),
-                              ),
-                              trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  //crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Expanded(
-                                              child: IconButton(
-                                                  icon: Icon(Icons.edit),
-                                                  iconSize: 24,
-                                                  padding: EdgeInsets.zero,
-                                                  constraints: BoxConstraints(),
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              HelpScreen()),
-                                                    ).then(onGoBack);
-                                                  })),
-                                          Expanded(
-                                              child: IconButton(
-                                                  icon: Icon(Icons.delete),
-                                                  iconSize: 24,
-                                                  padding: EdgeInsets.zero,
-                                                  constraints: BoxConstraints(),
-                                                  //color: AppTheme.themeData.colorScheme.inversePrimary,
-                                                  onPressed: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        barrierDismissible:
-                                                            true,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return AlertDialog(
-                                                            title: Text(
-                                                                "Mensaje de confirmacion"),
-                                                            content: Text(
-                                                                "Desea Eliminar?"),
-                                                            actions: [
-                                                              FloatingActionButton(
-                                                                child: const Text(
-                                                                    'CANCEL'),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(
-                                                                          'Failure');
-                                                                },
-                                                              ),
-                                                              FloatingActionButton(
-                                                                  child: const Text(
-                                                                      'ACCEPT'),
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop(
-                                                                            'Success');
-                                                                  })
-                                                            ],
-                                                          );
-                                                        }).then((value) {
-                                                      if (value.toString() ==
-                                                          "Success") {
-                                                        print(personax.id);
-                                                        Provider.of<FincaApi>(
-                                                                context,
-                                                                listen: false)
-                                                            .deleteFinca(
-                                                                TokenUtil.TOKEN,
-                                                                personax.id)
-                                                            .then((value) =>
-                                                                onGoBack(
-                                                                    value));
-                                                        //var onGoBack = onGoBack;
-                                                        //BlocProvider.of<ProductosBloc>(context).add(DeleteProductoEvent(producto: state.productosList[index]));
-                                                      }
-                                                    });
-                                                  }))
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: IconButton(
-                                              icon: Icon(Icons.qr_code),
-                                              padding: EdgeInsets.zero,
-                                              constraints: BoxConstraints(),
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          MyAppQR(
-                                                            modelA: personax,
-                                                          )),
-                                                ).then(onGoBack);
-                                              },
-                                            ),
-                                          ),
-                                          Expanded(child: Builder(
-                                            builder: (BuildContext context) {
-                                              return IconButton(
-                                                icon: Icon(Icons
-                                                    .send_and_archive_sharp),
-                                                padding: EdgeInsets.zero,
-                                                constraints: BoxConstraints(),
-                                                onPressed: () async {
-                                                  /*RespAsistenciapaModelo api=await Provider.of<AsistenciapaApi>(context, listen: false).getAsistenciapa(TokenUtil.TOKEN);
-                                                  exportAsistenciaToExcel(api.data);
-                                                  await Future.delayed(const Duration(seconds: 1));
-                                                  print("OJO:${imagePaths.isEmpty}");
-                                                  text="Exportando Asistencias";
-                                                  if(!text.isEmpty && !imagePaths.isEmpty){
-                                                    _onShare(context);
-                                                    Fluttertoast.showToast(
-                                                        msg: "Exporto correctamente",
-                                                        toastLength: Toast.LENGTH_LONG,
-                                                        gravity: ToastGravity.CENTER,
-                                                        timeInSecForIosWeb: 1,
-                                                        backgroundColor: Colors.blue,
-                                                        textColor: Colors.white,
-                                                        fontSize: 16.0
-                                                    );
-                                                  }else{
-                                                    Fluttertoast.showToast(
-                                                        msg: "Error Al compartir",
-                                                        toastLength: Toast.LENGTH_LONG,
-                                                        gravity: ToastGravity.CENTER,
-                                                        timeInSecForIosWeb: 1,
-                                                        backgroundColor: Colors.blue,
-                                                        textColor: Colors.white,
-                                                        fontSize: 16.0
-                                                    );
-                                                  }*/
-                                                },
-                                              );
-                                            },
-                                          ))
-                                        ],
-                                      ),
-                                    )
-                                  ])),
-                        ],
+                Column(
+                  children: [
+                    FadeAnimation(
+                      0.5,
+                      Text(
+                        "Mis Fincas",
+                        style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
-                    ),
-                  ),
+                    )
+                  ],
                 ),
               ],
             ),
-          );
-        },
-        itemCount: persona.length,
+          ),
+          Expanded(
+              child: ListView.builder(
+            itemBuilder: (context, index) {
+              FincaModelo personax = persona[index];
+              return Padding(
+                  padding: EdgeInsets.only(top: 0),
+                  child: FadeAnimation(
+                    0.5,
+                    Container(
+                      height: 130,
+                      padding: EdgeInsets.all(5.0),
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: 3, vertical: 10),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                "https://cdnx.jumpseller.com/3841/image/34731799/WhatsApp_Image_2023-02-16_at_12.55.44.jpeg?1683039580")),
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color.fromARGB(217, 217, 217, 217),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(personax.nombreFinca,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20)),
+                              Text(personax.telefono,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15)),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HelpScreen()),
+                                  ).then(onGoBack);
+                                },
+                                child: Text(
+                                  "Editar",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(80))),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title:
+                                              Text("Mensaje de confirmacion"),
+                                          content: Text("Desea Eliminar?"),
+                                          actions: [
+                                            FloatingActionButton(
+                                              child: const Text('CANCEL'),
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop('Failure');
+                                              },
+                                            ),
+                                            FloatingActionButton(
+                                                child: const Text('ACCEPT'),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop('Success');
+                                                })
+                                          ],
+                                        );
+                                      }).then((value) {
+                                    if (value.toString() == "Success") {
+                                      print(personax.id);
+                                      Provider.of<FincaApi>(context,
+                                              listen: false)
+                                          .deleteFinca(
+                                              TokenUtil.TOKEN, personax.id)
+                                          .then((value) => onGoBack(value));
+                                      //var onGoBack = onGoBack;
+                                      //BlocProvider.of<ProductosBloc>(context).add(DeleteProductoEvent(producto: state.productosList[index]));
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  "Eliminar", // a futuro "ver"
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(80))),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ));
+            },
+            itemCount: persona.length,
+          ))
+        ],
       ),
+      //},
+      //itemCount: persona.length,
+      // ),
     );
   }
 
   int selectedPosition = 0;
-  final tabs = ['Home', 'Profile', 'Help', 'Settings'];
+  final tabs = ['Finca', 'Usuarios', 'Help', 'Settings'];
 
   _buildBottomTab1() {
+    return BottomAppBar(
+      //color: AppTheme.themeData.colorScheme.primaryContainer,
+
+      shape: CircularNotchedRectangle(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          TabItem(
+            icon: Icons.home,
+            text: tabs[0],
+            isSelected: selectedPosition == 0,
+            onTap: () {
+              setState(() {
+                selectedPosition = 0;
+              });
+              /*Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return HelpScreen();
+              }));*/
+            },
+          ),
+          TabItem(
+            icon: Icons.person,
+            text: tabs[1],
+            isSelected: selectedPosition == 1,
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainUser();
+              }));
+            },
+          ),
+          TabItem(
+            text: tabs[2],
+            icon: Icons.help,
+            isSelected: selectedPosition == 2,
+            onTap: () {
+              setState(() {
+                selectedPosition = 2;
+              });
+            },
+          ),
+          TabItem(
+            text: tabs[3],
+            icon: Icons.settings,
+            isSelected: selectedPosition == 3,
+            onTap: () {
+              setState(() {
+                selectedPosition = 3;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildshearch() {
     return BottomAppBar(
       //color: AppTheme.themeData.colorScheme.primaryContainer,
 

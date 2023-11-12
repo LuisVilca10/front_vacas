@@ -1,4 +1,3 @@
-
 import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/login/login.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +6,9 @@ import 'package:flutter/material.dart';
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
       {super.key,
-        required this.screenIndex,
-        required this.iconAnimationController,
-        required this.callBackIndex});
+      required this.screenIndex,
+      required this.iconAnimationController,
+      required this.callBackIndex});
 
   final AnimationController iconAnimationController;
   final DrawerIndex screenIndex;
@@ -31,15 +30,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
     drawerList = <DrawerList>[
       DrawerList(
         index: DrawerIndex.HOME,
-        labelName: 'Principal',
+        labelName: 'Finca',
         icon: Icon(Icons.home),
       ),
       DrawerList(
-        index: DrawerIndex.FeedBack,
-        labelName: 'Finca',
-        isAssetsImage: true,
-        icon: Icon(Icons.villa_sharp)
-      ),
+          index: DrawerIndex.USER,
+          labelName: 'Usuarios',
+          //isAssetsImage: true,
+          icon: Icon(Icons.person)),
       DrawerList(
         index: DrawerIndex.Help,
         labelName: 'Actividad Bloc',
@@ -95,12 +93,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   .value /
                               360),
                           child: Center(
-                            child:  /*imageUrl==""? */CircleAvatar(
-                              backgroundImage: AssetImage('assets/imagen/profile.jpg'),
+                            child: /*imageUrl==""? */ CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/imagen/profile.jpg'),
                               radius: 40,
                               backgroundColor: Colors.transparent,
                             ),
-                             /*CircleAvatar(
+                            /*CircleAvatar(
                               backgroundImage: NetworkImage(imageUrl!!),
                               radius: 40,
                               backgroundColor: Colors.transparent,
@@ -113,7 +112,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      (/*name==null?*/"Anonimo"/*:name*/)+ (" ") + (/*email==null?*/"Anomim"/*:email*/),
+                      (/*name==null?*/ "Anonimo" /*:name*/) +
+                          (" ") +
+                          (/*email==null?*/ "Anomim" /*:email*/),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -205,7 +206,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Container(
                     width: 6.0,
                     height: 46.0,
-
                   ),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
@@ -286,7 +286,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
 enum DrawerIndex {
   HOME,
-  FeedBack,
+  USER,
   Help,
   Share,
   About,

@@ -1,3 +1,4 @@
+import 'package:vacas_front/animation/FadeAnimation.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/drawer/home_drawer.dart';
 import 'package:flutter/material.dart';
@@ -162,56 +163,60 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                             onDrawerClick();
                           },
                         ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).padding.top + 2,
-                                left: 8),
-                            child: SizedBox(
-                              width: AppBar().preferredSize.height + 20,
-                              height: AppBar().preferredSize.height - 0,
-                              child: MaterialApp(
-                                debugShowCheckedModeBanner: false,
-                                themeMode: AppTheme.useLightMode
-                                    ? ThemeMode.light
-                                    : ThemeMode.dark,
-                                theme: AppTheme.themeDataLight,
-                                darkTheme: AppTheme.themeDataDark,
-                                //color: Colors.transparent,
-                                home: InkWell(
-                                  borderRadius: BorderRadius.circular(
-                                      AppBar().preferredSize.height),
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/imagen/profile.jpg'),
-                                  ),
-                                  onTap: () {
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
+                      FadeAnimation(
+                        0.5,
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).padding.top + 7,
+                                  left: 8),
+                              child: SizedBox(
+                                width: AppBar().preferredSize.height + 0,
+                                height: AppBar().preferredSize.height - 0,
+                                child: MaterialApp(
+                                  debugShowCheckedModeBanner: false,
+                                  themeMode: AppTheme.useLightMode
+                                      ? ThemeMode.light
+                                      : ThemeMode.dark,
+                                  theme: AppTheme.themeDataLight,
+                                  darkTheme: AppTheme.themeDataDark,
+                                  //color: Colors.transparent,
+                                  home: InkWell(
+                                    borderRadius: BorderRadius.circular(
+                                        AppBar().preferredSize.height),
+                                    child: CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          'assets/imagen/profile.jpg'),
+                                    ),
+                                    onTap: () {
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
 
-                                    onDrawerClick();
-                                  },
+                                      onDrawerClick();
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).padding.top,
-                                left: 3),
-                            child: Text(
-                              "User Admin",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  //fontFamily: 'Montserrat',
-                                  fontSize: 15),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).padding.top + 9,
+                                  left: 3),
+                              child: Text(
+                                "User Admin",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppTheme.colorMenu,
+                                    //fontFamily: 'Montserrat',
+                                    fontSize: 15),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       // this just menu and arrow icon animation
-                      Padding(
+                      /* Padding(
                         padding: EdgeInsets.only(
                             top: MediaQuery.of(context).padding.top + 8,
                             left: 8),
@@ -248,7 +253,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                             ),
                           ),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

@@ -13,7 +13,7 @@ class _UsuarioApi implements UsuarioApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.168.0.100:8083';
+    baseUrl ??= 'http://192.168.56.1:8083';
   }
 
   final Dio _dio;

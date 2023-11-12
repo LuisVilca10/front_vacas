@@ -15,7 +15,7 @@ class FincaModelo {
 
   FincaModelo.unlaunched();
 
-  late final int id;
+  late int id = 0;
   late final String nombreFinca;
   late final String are;
   late final String medida;

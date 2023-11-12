@@ -7,6 +7,7 @@ import 'package:vacas_front/ui/finca/finca_main.dart';
 //import 'package:asistencia_app/ui/actividadfire/actividad_main.dart';
 import 'package:vacas_front/ui/help_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:vacas_front/ui/usuario/usuario_main.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -57,13 +58,13 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         setState(() {
           screenView = MainFinca(); //MainPersona()
         });
-      } else if (drawerIndex == DrawerIndex.FeedBack) {
+      } else if (drawerIndex == DrawerIndex.USER) {
         setState(() {
-          screenView = HelpScreen();
+          screenView = MainUser();
         });
       } else if (drawerIndex == DrawerIndex.Help) {
         setState(() {
-          ///screenView = MainActividadB();
+          screenView = HelpScreen();
         });
       } else if (drawerIndex == DrawerIndex.Invite) {
         setState(() {

@@ -14,13 +14,13 @@ import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
-class FincaForm extends StatefulWidget {
+class UsuarioForm extends StatefulWidget {
   @override
-  _FincaFormState createState() => _FincaFormState();
-  //const FincaForm({super.key});
+  _UsuarioFormState createState() => _UsuarioFormState();
+
 }
 
-class _FincaFormState extends State<FincaForm> {
+class _UsuarioFormState extends State<UsuarioForm> {
   bool showProfileInfo = false;
   late String _nombreFinca = "";
   late String _area = "";

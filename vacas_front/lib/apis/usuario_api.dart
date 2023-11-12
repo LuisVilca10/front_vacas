@@ -18,4 +18,6 @@ abstract class UsuarioApi {
   @POST("/auth/login") 
   Future<RespUsuarioModelo> login(@Body() UsuarioModelo usuario);
 
+
+
 }
