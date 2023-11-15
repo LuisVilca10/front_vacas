@@ -14,6 +14,7 @@ import 'package:vacas_front/ui/finca/MyAppState.dart';
 import 'package:vacas_front/ui/finca/finca_edit.dart';
 import 'package:vacas_front/ui/finca/finca_form.dart';
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
+import 'package:vacas_front/ui/vacas/vaca_main.dart';
 //import 'package:vacas_front/ui/finca/finca_form.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 import '../help_screen.dart';
@@ -215,8 +216,7 @@ class _FincaUIState extends State<FincaUI> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "https://cdnx.jumpseller.com/3841/image/34731799/WhatsApp_Image_2023-02-16_at_12.55.44.jpeg?1683039580")),
+                            image: AssetImage("assets/imagen/fondo.jpeg")),
                         borderRadius: BorderRadius.circular(8),
                         color: Color.fromARGB(217, 217, 217, 217),
                       ),
@@ -334,7 +334,7 @@ class _FincaUIState extends State<FincaUI> {
   }
 
   int selectedPosition = 0;
-  final tabs = ['Finca', 'Usuarios', 'Help', 'Settings'];
+  final tabs = ['Finca', 'Usuarios', 'Vacas', 'Settings'];
 
   _buildBottomTab1() {
     return BottomAppBar(
@@ -372,9 +372,9 @@ class _FincaUIState extends State<FincaUI> {
             icon: Icons.help,
             isSelected: selectedPosition == 2,
             onTap: () {
-              setState(() {
-                selectedPosition = 2;
-              });
+               Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainVaca();
+              }));
             },
           ),
           TabItem(

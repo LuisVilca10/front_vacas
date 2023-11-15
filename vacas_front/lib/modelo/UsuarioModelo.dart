@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable()
 class UsuarioModelo {
   UsuarioModelo({
+    required this.id,
     required this.nombres,
     required this.apellidos,
     required this.correo,
@@ -13,6 +14,8 @@ class UsuarioModelo {
     required this.estado,
     required this.offlinex,
   });
+
+  UsuarioModelo.unlaunched();
 
   UsuarioModelo.login(this.correo, this.password)
       : nombres = "",
@@ -25,7 +28,7 @@ class UsuarioModelo {
   UsuarioModelo.loginDos(this.correo, this.password)
       : nombres = "",
         apellidos = "";
-
+  late int id = 0;
   late final String nombres;
   late final String apellidos;
   late final String correo;
@@ -38,6 +41,7 @@ class UsuarioModelo {
 
   factory UsuarioModelo.fromJson(Map<String, dynamic> json) {
     return UsuarioModelo(
+      id: json['id'],
       nombres: json['nombres'],
       apellidos: json['apellidos'],
       correo: json['correo'],

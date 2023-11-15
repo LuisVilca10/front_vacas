@@ -40,7 +40,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           icon: Icon(Icons.person)),
       DrawerList(
         index: DrawerIndex.Help,
-        labelName: 'Actividad Bloc',
+        labelName: 'Vacas',
         icon: Icon(Icons.help),
       ),
       DrawerList(

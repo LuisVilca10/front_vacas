@@ -8,6 +8,7 @@ import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/ui/help_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
+import 'package:vacas_front/ui/vacas/vaca_main.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -64,11 +65,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         });
       } else if (drawerIndex == DrawerIndex.Help) {
         setState(() {
-          screenView = HelpScreen();
+          screenView = MainVaca();
         });
       } else if (drawerIndex == DrawerIndex.Invite) {
         setState(() {
-          //  screenView = MainActividadBFire();
+          screenView = HelpScreen();
         });
       } else {
         //do in your way......

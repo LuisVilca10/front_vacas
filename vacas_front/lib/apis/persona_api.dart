@@ -6,6 +6,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/http.dart';
 
 part 'persona_api.g.dart';
+
 @RestApi(baseUrl: UrlApi.urlApix)
 abstract class PersonaApi {
   factory PersonaApi(Dio dio, {String baseUrl}) = _PersonaApi;
@@ -23,32 +24,14 @@ abstract class PersonaApi {
   Future<UsuarioModelo> crearUsuario(@Header("Authorization") String token, @Body() UsuarioModelo usuario);
 
   @GET("/user/buscar/{id}")
-  Future<UsuarioModelo> findUsuario(@Header("Authorization") String token, @Path("id") int id);
+  Future<UsuarioModelo> findUsuario(
+      @Header("Authorization") String token, @Path("id") int id);
 
   @DELETE("/user/eliminar/{id}")
-  Future<GenericModelo> deleteUsuario(@Header("Authorization") String token, @Path("id") int id);
+  Future<GenericModelo> deleteUsuario(
+      @Header("Authorization") String token, @Path("id") int id);
 
   @PUT("/user/editar/{id}")
-  Future<UsuarioModelo> updateUsuario(@Header("Authorization") String token, @Path("id") int id , @Body() UsuarioModelo usuario);
+  Future<UsuarioModelo> updateUsuario(@Header("Authorization") String token,
+      @Path("id") int id, @Body() UsuarioModelo usuario);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

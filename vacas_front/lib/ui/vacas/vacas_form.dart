@@ -4,29 +4,27 @@ import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
-import 'package:vacas_front/apis/finca_api.dart';
-import 'package:vacas_front/apis/persona_api.dart';
-import 'package:vacas_front/bloc/finca/finca_bloc.dart';
+
+import 'package:vacas_front/apis/vaca_api.dart';
 import 'package:vacas_front/componets/DropDownFormField.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vacas_front/modelo/UsuarioModelo.dart';
-import 'package:vacas_front/theme/AppTheme.dart';
-import 'package:vacas_front/ui/finca/finca_main.dart';
+import 'package:vacas_front/modelo/VacaModelo.dart';
+
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
+import 'package:vacas_front/ui/vacas/vaca_main.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
-class UsuarioForm extends StatefulWidget {
+class VacasForm extends StatefulWidget {
   @override
-  _UsuarioFormState createState() => _UsuarioFormState();
+  _VacasFormState createState() => _VacasFormState();
 }
 
-class _UsuarioFormState extends State<UsuarioForm> {
+class _VacasFormState extends State<VacasForm> {
   bool showProfileInfo = false;
-  late String _nombreUsuario = "";
-  late String _apellido = "";
-  late String _telefono = "";
+  late String _nombreVaca = "";
+  late String _nroVaca = "";
+  late String _sexo = "";
 
   TextEditingController _fecha = new TextEditingController();
   DateTime? selectedDate;
@@ -34,9 +32,8 @@ class _UsuarioFormState extends State<UsuarioForm> {
   //TextEditingController _horai = new TextEditingController();
   //TimeOfDay? selectedTime;
 
-  late String _tipousuario = "";
-  late String _password = "";
-  late String _correo = "";
+  late int _finca;
+  late String _raza = "";
   late String _estado = "Activo";
   late String _offlinex = "Si";
   late String _perfil_prin = "Todo";
@@ -44,19 +41,8 @@ class _UsuarioFormState extends State<UsuarioForm> {
   Position? currentPosition;
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
-  late String _dni = "";
-
   late String _userCreate;
   var _data = [];
-
-  /*List<Map<String, String>> listaUser = [
-    {'value': 'PF', 'display': 'Producción Juan'},
-    {'value': 'MC', 'display': 'Producción Micaela'},
-  ];*/
-  List<Map<String, String>> listapro = [
-    {'value': 'PL', 'display': 'Producción Leche'},
-    {'value': 'PC', 'display': 'Producción Carne'},
-  ];
 
   @override
   void initState() {
@@ -70,36 +56,28 @@ class _UsuarioFormState extends State<UsuarioForm> {
     isMultipleSelection: true,
   );
 
-  void capturaNombreUsuario(valor) {
-    this._nombreUsuario = valor;
+  void capturaNombreVaca(valor) {
+    this._nombreVaca = valor;
+  }
+
+  void capturaNroVaca(valor) {
+    this._nroVaca = valor;
   }
 
   void capturaFecha(valor) {
     this._fecha.text = valor;
   }
 
-  void capturaApellido(valor) {
-    this._apellido = valor;
+  void capturarSexo(valor) {
+    this._sexo = valor;
   }
 
-  void capturaTelefono(valor) {
-    this._telefono = valor;
+  void capturFinca(int valor) {
+    this._finca = valor;
   }
 
-  void capturaTipoUsuario(valor) {
-    this._tipousuario = valor;
-  }
-
-  void capturaMedidaLeche(valor) {
-    this._password = valor;
-  }
-
-  void capturaCorreo(valor) {
-    this._correo = valor;
-  }
-
-  void capturaDNI(valor) {
-    this._dni = valor;
+  void capturaRaza(valor) {
+    this._raza = valor;
   }
 
   @override
@@ -129,52 +107,33 @@ class _UsuarioFormState extends State<UsuarioForm> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Form. Reg. Usuario",
+                        "Form. Reg. Vaca",
                         style: TextStyle(color: Colors.black, fontSize: 30),
                       ),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoNombre(
-                          capturaNombreUsuario, "Nombre Completo:"),
+                      _buildDatoNombre(capturaNombreVaca, "Nombre Vaca:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoApellidoUsuario(
-                          capturaApellido, "Apellidos Completo:"),
+                      _buildDatoNrArete(capturaNroVaca, "Nro.Arete:"),
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: _buildDatoNumber(capturaDNI, "DNI:"),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            child: _buildDatoPhone(capturaTelefono, "Celular:"),
-                          ),
-                        ],
-                      ),
+                      _buildDatosexo(capturarSexo, "Sexo:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoFecha(capturaFecha, "Fecha Nacimiento:"),
+                      _buildDatoFecha(capturaFecha, "Fecha de Nacimineto:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoCorreo(capturaCorreo, "Correo:"),
+                      _buildDatoRaza(capturaRaza, "Raza de la vaca:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoPassword(capturaMedidaLeche, "Contraseña:"),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      _buildDatoTipoUser(
-                          capturaTipoUsuario, "Tipo de Usuario:"),
+                      _buildDatoEntero(capturFinca, "Finca:"),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
@@ -194,40 +153,34 @@ class _UsuarioFormState extends State<UsuarioForm> {
                                     ),
                                   );
                                   _formKey.currentState!.save();
-                                  UsuarioModelo mp =
-                                      new UsuarioModelo.unlaunched();
-                                  mp.nombres = _nombreUsuario;
+                                  VacaModelo mp = new VacaModelo.unlaunched();
+                                  mp.id = 0;
+                                  mp.nombreVaca = _nombreVaca;
                                   //print(DateFormat('yyyy-MM-dd').format(currentTime));
-                                  mp.apellidos = _apellido;
-                                  mp.dni = _dni;
-                                  //mp.telefono = _telefono;
-                                  mp.correo = _correo;
-                                  //mp.fecha = DateFormat('yyyy-MM-dd').format(
-                                  //   DateTime.parse(_fecha.value.text));
-                                  mp.password = _password;
-                                  mp.token = _tipousuario;
-                                  mp.perfilPrin = _perfil_prin;
-                                  mp.offlinex = _offlinex;
-                                  mp.estado = _estado;
+                                  mp.sexo = _sexo;
+                                  mp.noArete = _nroVaca;
+                                  mp.feNacimiento = DateFormat('yyyy-MM-dd')
+                                      .format(
+                                          DateTime.parse(_fecha.value.text));
+                                  mp.raza = _raza;
+                                  //FincaModelo finca=FincaModelo.unlaunched();
+                                  //finca.id=_finca;
+                                  mp.fincaId = _finca;
 
-                                  
                                   final prefs =
                                       await SharedPreferences.getInstance();
-
-                                  var api = await Provider.of<PersonaApi>(
-                                          context,
+                                  print("ver: ${mp.toJson()}");
+                                  var api = await Provider.of<VacaApi>(context,
                                           listen: false)
-                                      .crearUsuario(TokenUtil.TOKEN, mp);
-                                  print("ver: ${api.toJson()}");
+                                      .crearVaca(TokenUtil.TOKEN, mp);
+
                                   if (api.toJson() != null) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => MainUser()),
+                                          builder: (context) => MainVaca()),
                                     );
-                                   
                                   }
-
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -289,12 +242,34 @@ class _UsuarioFormState extends State<UsuarioForm> {
     );
   }
 
+  Widget _buildDatoNrArete(Function obtValor, String label) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(Icons.numbers),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        filled: true,
+      ),
+      keyboardType: TextInputType.text,
+      validator: (String? value) {
+        if (value!.isEmpty) {
+          return 'El Nro arete es requerido!';
+        }
+        return null;
+      },
+      onSaved: (String? value) {
+        obtValor(value!);
+      },
+    );
+  }
+
   Widget _buildDatoNombre(Function obtValor, String label) {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(Icons.person_2),
-        hintText: 'Ej: Juan Lucas',
+        prefixIcon: Icon(Icons.pest_control_rodent_sharp),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -313,12 +288,11 @@ class _UsuarioFormState extends State<UsuarioForm> {
     );
   }
 
-  Widget _buildDatoCorreo(Function obtValor, String label) {
+  Widget _buildDatoRaza(Function obtValor, String label) {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(Icons.alternate_email_outlined),
-        hintText: 'Ej: ejemplo@ejemplo.com',
+        prefixIcon: Icon(Icons.category_rounded),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -337,22 +311,14 @@ class _UsuarioFormState extends State<UsuarioForm> {
     );
   }
 
-  Widget _buildDatoPassword(Function obtValor, String label) {
+  Widget _buildDatoFinca(
+    Function obtValor,
+    String label,
+  ) {
     return TextFormField(
-      obscureText: passwordVisible,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.password),
-        suffixIcon: IconButton(
-          icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
-          onPressed: () {
-            setState(
-              () {
-                passwordVisible = !passwordVisible;
-              },
-            );
-          },
-        ),
         labelText: label,
+        prefixIcon: Icon(Icons.add_business),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -361,20 +327,21 @@ class _UsuarioFormState extends State<UsuarioForm> {
       keyboardType: TextInputType.text,
       validator: (String? value) {
         if (value!.isEmpty) {
-          return 'Correo Requerido!';
+          return 'Finca es Requerido!';
         }
         return null;
       },
       onSaved: (String? value) {
-        obtValor(value!);
+        //FincaModelo finca = FincaModelo(nombre: value!);
+        obtValor(_finca);
       },
     );
   }
 
-  Widget _buildDatoApellidoUsuario(Function obtValor, String label) {
+  Widget _buildDatosexo(Function obtValor, String label) {
     return TextFormField(
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person_2),
+        prefixIcon: Icon(Icons.swipe_left_alt),
         labelText: label,
         hintText: "Ej. Perez Perez",
         border: OutlineInputBorder(
