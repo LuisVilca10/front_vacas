@@ -54,7 +54,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   void changeIndex(DrawerIndex drawerIndexdata) {
     if (drawerIndex != drawerIndexdata) {
-      drawerIndex = drawerIndexdata;
+      // drawerIndex = drawerIndexdata;
       if (drawerIndex == DrawerIndex.HOME) {
         setState(() {
           screenView = MainFinca(); //MainPersona()

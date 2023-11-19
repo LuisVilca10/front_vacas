@@ -9,6 +9,8 @@ import 'package:vacas_front/componets/TabItem.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 import 'package:vacas_front/modelo/VacaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
+import 'package:vacas_front/ui/analitica/leche/fileche_main.dart';
+import 'package:vacas_front/ui/analitica/salud/fisalud_main.dart';
 import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/ui/help_screen.dart';
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
@@ -45,26 +47,17 @@ class _AnaliticUIState extends State<AnaliticUI> {
       theme: AppTheme.themeDataLight,
       darkTheme: AppTheme.themeDataDark,
       home: Scaffold(
-          appBar: new AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            centerTitle: true,
-            actions: <Widget>[],
-          ),
-          backgroundColor: AppTheme.nearlyWhite,
-          body: _buildListView(),
-          bottomNavigationBar: _buildBottomTab1(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => VacasForm()),
-              );
-            },
-            backgroundColor: Colors.grey.shade400,
-            child: Icon(Icons.add, size: 35),
-          )),
+        appBar: new AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          actions: <Widget>[],
+        ),
+        backgroundColor: AppTheme.nearlyWhite,
+        body: _buildListView(),
+        bottomNavigationBar: _buildBottomTab1(),
+      ),
     );
   }
 
@@ -182,7 +175,7 @@ class _AnaliticUIState extends State<AnaliticUI> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HelpScreen()),
+                                    builder: (context) => MainfiLeche()),
                               );
                             },
                             child: Text(
@@ -228,38 +221,38 @@ class _AnaliticUIState extends State<AnaliticUI> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("Produccion de leche",
+                            Text("Salud Vaca",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25)),
                             Row(
                               children: [
-                                Text("Total:",
+                                Text("Gasto:",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 15)),
                                 SizedBox(
                                   width: 20,
                                 ),
-                                Text("0 botellas",
+                                Text("0 soles",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 15)),
                               ],
                             ),
                             Row(
                               children: [
-                                Text("Total Ayer:",
+                                Text("Total gasto mes:",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 15)),
                                 SizedBox(
                                   width: 20,
                                 ),
-                                Text("0 botellas",
+                                Text("0 soles",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 15)),
                               ],
                             ),
                             Row(
                               children: [
-                                Text("Promedio diario:",
+                                Text("Promedio gasto:",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 15)),
                                 SizedBox(
@@ -284,7 +277,7 @@ class _AnaliticUIState extends State<AnaliticUI> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HelpScreen()),
+                                    builder: (context) => MainfiSalud()),
                               );
                             },
                             child: Text(

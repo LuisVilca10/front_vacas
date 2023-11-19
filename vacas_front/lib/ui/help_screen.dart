@@ -22,10 +22,10 @@ class _HelpScreenState extends State<HelpScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode: AppTheme.useLightMode ? ThemeMode.light : ThemeMode.dark,
-      theme: AppTheme.themeDataLight,
+      // themeMode: AppTheme.useLightMode ? ThemeMode.light : ThemeMode.dark,
+      //theme: AppTheme.themeDataLight,
       //theme: AppTheme.themeData,
-      darkTheme: AppTheme.themeDataDark,
+      //darkTheme: AppTheme.themeDataDark,
 
       home: SafeArea(
         top: false,

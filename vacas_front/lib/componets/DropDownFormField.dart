@@ -43,7 +43,7 @@ class DropDownFormField extends FormField<dynamic> {
                     decoration: InputDecoration(
                       contentPadding: contentPadding,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(10 )),
                       labelText: titleText,
                       filled: filled,
                     ),
@@ -73,7 +73,7 @@ class DropDownFormField extends FormField<dynamic> {
                   Text(
                     state.hasError ? state.errorText! : '',
                     style: TextStyle(
-                        color: Colors.redAccent.shade700,
+                        color: Colors.black,
                         fontSize: state.hasError ? 12.0 : 0.0),
                   ),
                 ],

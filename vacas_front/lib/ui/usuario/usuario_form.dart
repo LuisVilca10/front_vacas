@@ -197,10 +197,10 @@ class _UsuarioFormState extends State<UsuarioForm> {
                                   UsuarioModelo mp =
                                       new UsuarioModelo.unlaunched();
                                   mp.nombres = _nombreUsuario;
-                                  //print(DateFormat('yyyy-MM-dd').format(currentTime));
+
                                   mp.apellidos = _apellido;
                                   mp.dni = _dni;
-                                  //mp.telefono = _telefono;
+
                                   mp.correo = _correo;
                                   //mp.fecha = DateFormat('yyyy-MM-dd').format(
                                   //   DateTime.parse(_fecha.value.text));
@@ -210,7 +210,6 @@ class _UsuarioFormState extends State<UsuarioForm> {
                                   mp.offlinex = _offlinex;
                                   mp.estado = _estado;
 
-                                  
                                   final prefs =
                                       await SharedPreferences.getInstance();
 
@@ -225,9 +224,7 @@ class _UsuarioFormState extends State<UsuarioForm> {
                                       MaterialPageRoute(
                                           builder: (context) => MainUser()),
                                     );
-                                   
                                   }
-
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(

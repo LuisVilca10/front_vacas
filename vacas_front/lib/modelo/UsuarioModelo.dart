@@ -45,7 +45,7 @@ class UsuarioModelo {
       nombres: json['nombres'],
       apellidos: json['apellidos'],
       correo: json['correo'],
-      password: json['password'],
+      password: json['password'] ?? '',
       token: json['token'] ?? '',
       dni: json['dni'] ?? '',
       perfilPrin: json['perfilPrin'] ?? '',
