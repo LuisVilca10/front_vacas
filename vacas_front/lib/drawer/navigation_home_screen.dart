@@ -1,6 +1,7 @@
 import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/drawer/drawer_user_controller.dart';
 import 'package:vacas_front/drawer/home_drawer.dart';
+import 'package:vacas_front/ui/analitica/analitica_main.dart';
 import 'package:vacas_front/ui/finca/finca_main.dart';
 //import 'package:vacas_front/ui/fincadb/finca_main.dart';
 //import 'package:asistencia_app/ui/actividadb/actividad_main.dart';
@@ -54,7 +55,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   void changeIndex(DrawerIndex drawerIndexdata) {
     if (drawerIndex != drawerIndexdata) {
-      // drawerIndex = drawerIndexdata;
+      drawerIndex = drawerIndexdata;
       if (drawerIndex == DrawerIndex.HOME) {
         setState(() {
           screenView = MainFinca(); //MainPersona()
@@ -63,13 +64,13 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         setState(() {
           screenView = MainUser();
         });
-      } else if (drawerIndex == DrawerIndex.Help) {
+      } else if (drawerIndex == DrawerIndex.VACA) {
         setState(() {
           screenView = MainVaca();
         });
-      } else if (drawerIndex == DrawerIndex.Invite) {
+      } else if (drawerIndex == DrawerIndex.INFO) {
         setState(() {
-          screenView = HelpScreen();
+          screenView = MainAnalitic();
         });
       } else {
         //do in your way......

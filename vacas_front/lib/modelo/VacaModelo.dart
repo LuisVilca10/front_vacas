@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 
@@ -46,9 +45,6 @@ class VacaModelo {
     return _data;
   }
 }
-
-
-
 
 class VacaRespModelo {
   VacaRespModelo({

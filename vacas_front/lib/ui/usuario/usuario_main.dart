@@ -8,8 +8,10 @@ import 'package:vacas_front/componets/TabItem.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 import 'package:vacas_front/modelo/UsuarioModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
+import 'package:vacas_front/ui/analitica/analitica_main.dart';
 import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/ui/help_screen.dart';
+import 'package:vacas_front/ui/usuario/usuario_edit.dart';
 import 'package:vacas_front/ui/usuario/usuario_form.dart';
 import 'package:vacas_front/ui/vacas/vaca_main.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
@@ -43,7 +45,7 @@ class UsuarioUI extends StatefulWidget {
 }
 
 class _UsuarioUIState extends State<UsuarioUI> {
-    Future onGoBack(dynamic value) async {
+  Future onGoBack(dynamic value) async {
     setState(() {
       print(value);
     });
@@ -145,7 +147,7 @@ class _UsuarioUIState extends State<UsuarioUI> {
                       Text(
                         "Usuarios",
                         style:
-                            TextStyle(color: AppTheme.colorMenu, fontSize: 20),
+                            TextStyle(color:Colors.black, fontSize: 20),
                       ),
                     )
                   ],
@@ -240,7 +242,10 @@ class _UsuarioUIState extends State<UsuarioUI> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                HelpScreen()),
+                                                                UsuarioFormEdit(
+                                                                  modelU:
+                                                                      personax,
+                                                                )),
                                                       );
                                                     })),
                                             Expanded(
@@ -291,10 +296,16 @@ class _UsuarioUIState extends State<UsuarioUI> {
                                                         if (value.toString() ==
                                                             "Success") {
                                                           print("personax.id");
-                                                           Provider.of<PersonaApi>(context,
-                                                             listen: false)
-                                                              .deleteUsuario(TokenUtil.TOKEN,personax.id)
-                                                             .then((value) => onGoBack(value));
+                                                          Provider.of<PersonaApi>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .deleteUsuario(
+                                                                  TokenUtil
+                                                                      .TOKEN,
+                                                                  personax.id)
+                                                              .then((value) =>
+                                                                  onGoBack(
+                                                                      value));
                                                           //var onGoBack = onGoBack;
                                                           //BlocProvider.of<ProductosBloc>(context).add(DeleteProductoEvent(producto: state.productosList[index]));
                                                         }
@@ -318,7 +329,7 @@ class _UsuarioUIState extends State<UsuarioUI> {
   }
 
   int selectedPosition = 0;
-  final tabs = ['Finca', 'Usuarios', 'Vacas', 'Settings'];
+  final tabs = ['Finca', 'Usuarios', 'Vacas', 'Informe'];
   _buildBottomTab1() {
     return BottomAppBar(
       //color: AppTheme.themeData.colorScheme.primaryContainer,
@@ -352,19 +363,19 @@ class _UsuarioUIState extends State<UsuarioUI> {
             icon: Icons.help,
             isSelected: selectedPosition == 2,
             onTap: () {
-             Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return MainVaca();
               }));
             },
           ),
           TabItem(
             text: tabs[3],
-            icon: Icons.settings,
+            icon: Icons.assignment,
             isSelected: selectedPosition == 3,
             onTap: () {
-              setState(() {
-                selectedPosition = 3;
-              });
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainAnalitic();
+              }));
             },
           ),
         ],

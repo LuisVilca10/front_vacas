@@ -9,6 +9,7 @@ import 'package:vacas_front/apis/finca_api.dart';
 import 'package:vacas_front/componets/TabItem.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
+import 'package:vacas_front/ui/analitica/analitica_main.dart';
 //import 'package:vacas_front/ui/email_login_page.dart';
 import 'package:vacas_front/ui/finca/MyAppState.dart';
 import 'package:vacas_front/ui/finca/finca_edit.dart';
@@ -244,7 +245,9 @@ class _FincaUIState extends State<FincaUI> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HelpScreen()),
+                                        builder: (context) => FincaFormEdit(
+                                              modelFA: personax,
+                                            )),
                                   ).then(onGoBack);
                                 },
                                 child: Text(
@@ -334,7 +337,7 @@ class _FincaUIState extends State<FincaUI> {
   }
 
   int selectedPosition = 0;
-  final tabs = ['Finca', 'Usuarios', 'Vacas', 'Settings'];
+  final tabs = ['Finca', 'Usuarios', 'Vacas', 'Informe'];
 
   _buildBottomTab1() {
     return BottomAppBar(
@@ -372,19 +375,19 @@ class _FincaUIState extends State<FincaUI> {
             icon: Icons.help,
             isSelected: selectedPosition == 2,
             onTap: () {
-               Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return MainVaca();
               }));
             },
           ),
           TabItem(
             text: tabs[3],
-            icon: Icons.settings,
+            icon: Icons.assignment,
             isSelected: selectedPosition == 3,
             onTap: () {
-              setState(() {
-                selectedPosition = 3;
-              });
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainAnalitic();
+              }));
             },
           ),
         ],

@@ -348,7 +348,7 @@ class _AnaliticUIState extends State<AnaliticUI> {
           ),
           TabItem(
             text: tabs[3],
-            icon: Icons.settings,
+            icon: Icons.assignment,
             isSelected: selectedPosition == 3,
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {

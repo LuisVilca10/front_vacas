@@ -11,8 +11,10 @@ import 'package:vacas_front/modelo/VacaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/ui/analitica/analitica_main.dart';
 import 'package:vacas_front/ui/finca/finca_form.dart';
+import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/ui/help_screen.dart';
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
+import 'package:vacas_front/ui/vacas/vacas_edit.dart';
 import 'package:vacas_front/ui/vacas/vacas_form.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
@@ -273,7 +275,10 @@ class _VacaUIState extends State<VacaUI> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                HelpScreen()),
+                                                                VacasFormEdit(
+                                                                  modelV:
+                                                                      personax,
+                                                                )),
                                                       );
                                                     })),
                                             Expanded(
@@ -375,12 +380,9 @@ class _VacaUIState extends State<VacaUI> {
             text: tabs[0],
             isSelected: selectedPosition == 0,
             onTap: () {
-              setState(() {
-                selectedPosition = 0;
-              });
-              /*Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HelpScreen();
-              }));*/
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainFinca();
+              }));
             },
           ),
           TabItem(
@@ -405,7 +407,7 @@ class _VacaUIState extends State<VacaUI> {
           ),
           TabItem(
             text: tabs[3],
-            icon: Icons.settings,
+            icon: Icons.assignment,
             isSelected: selectedPosition == 3,
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {

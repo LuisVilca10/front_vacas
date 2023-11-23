@@ -15,12 +15,12 @@ import 'package:vacas_front/ui/usuario/usuario_main.dart';
 import 'package:vacas_front/ui/vacas/vaca_main.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
-class VacasForm extends StatefulWidget {
+class ProLecheForm extends StatefulWidget {
   @override
-  _VacasFormState createState() => _VacasFormState();
+  _ProLecheFormState createState() => _ProLecheFormState();
 }
 
-class _VacasFormState extends State<VacasForm> {
+class _ProLecheFormState extends State<ProLecheForm> {
   bool showProfileInfo = false;
   late String _nombreVaca = "";
   late String _nroVaca = "";
@@ -107,7 +107,7 @@ class _VacasFormState extends State<VacasForm> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Form. Reg. Vaca",
+                        "Form. Produccion Leche",
                         style: TextStyle(color: Colors.black, fontSize: 30),
                       ),
                       SizedBox(

@@ -9,7 +9,7 @@ import 'package:vacas_front/apis/finca_api.dart';
 import 'package:vacas_front/componets/TabItem.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
-import 'package:vacas_front/ui/analitica/leche/pro_leche.dart';
+import 'package:vacas_front/ui/analitica/leche/pro_main.dart';
 //import 'package:vacas_front/ui/email_login_page.dart';
 import 'package:vacas_front/ui/finca/MyAppState.dart';
 import 'package:vacas_front/ui/finca/finca_edit.dart';
@@ -182,7 +182,7 @@ class _fiLecheUIState extends State<fiLecheUI> {
                     FadeAnimation(
                       0.5,
                       Text(
-                        "Mis Fincas",
+                        "Seleccione una finca: Producción Leche",
                         style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
                     )
@@ -191,6 +191,7 @@ class _fiLecheUIState extends State<fiLecheUI> {
               ],
             ),
           ),
+          SizedBox(height: 10),
           Expanded(
               child: ListView.builder(
             itemBuilder: (context, index) {
@@ -315,7 +316,7 @@ class _fiLecheUIState extends State<fiLecheUI> {
           ),
           TabItem(
             text: tabs[3],
-            icon: Icons.settings,
+            icon: Icons.assignment,
             isSelected: selectedPosition == 3,
             onTap: () {
               setState(() {

@@ -1,7 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:vacas_front/modelo/VacaModelo.dart';
 
 class SaludVacaModelo {
-  late int id = 0;
+  late int id=0;
   late final String fechaRegistro;
   late final String peso;
   late final int frecuenciaCardiaca;
@@ -9,7 +10,7 @@ class SaludVacaModelo {
   late final String ultimaRevisionVeterinaria;
   late final String sintomas;
   late final int vacaId;
-
+  
   SaludVacaModelo({
     required this.id,
     required this.fechaRegistro,
@@ -23,7 +24,7 @@ class SaludVacaModelo {
 
   SaludVacaModelo.unlaunched();
 
-  SaludVacaModelo.fromJson(Map<String, dynamic> json) {
+  SaludVacaModelo.fromJson(Map<String, dynamic> json){
     id = json['id'];
     fechaRegistro = json['fechaRegistro'];
     peso = json['peso'];
@@ -48,7 +49,7 @@ class SaludVacaModelo {
   }
 }
 
-class SaludVacaRespModelo {
+class SaludVacaRespModelo {  
   SaludVacaRespModelo({
     required this.id,
     required this.fechaRegistro,
@@ -68,7 +69,7 @@ class SaludVacaRespModelo {
   late final String sintomas;
   late final VacaRespModelo vacaId;
 
-  SaludVacaRespModelo.fromJson(Map<String, dynamic> json) {
+  SaludVacaRespModelo.fromJson(Map<String, dynamic> json){
     id = json['id'];
     fechaRegistro = json['fechaRegistro'];
     peso = json['peso'];

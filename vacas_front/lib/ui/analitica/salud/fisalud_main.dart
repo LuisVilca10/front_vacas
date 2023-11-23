@@ -9,11 +9,14 @@ import 'package:vacas_front/apis/finca_api.dart';
 import 'package:vacas_front/componets/TabItem.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
-import 'package:vacas_front/ui/analitica/leche/pro_leche.dart';
+import 'package:vacas_front/ui/analitica/analitica_main.dart';
+import 'package:vacas_front/ui/analitica/leche/pro_main.dart';
+import 'package:vacas_front/ui/analitica/salud/salud_main.dart';
 //import 'package:vacas_front/ui/email_login_page.dart';
 import 'package:vacas_front/ui/finca/MyAppState.dart';
 import 'package:vacas_front/ui/finca/finca_edit.dart';
 import 'package:vacas_front/ui/finca/finca_form.dart';
+import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
 import 'package:vacas_front/ui/vacas/vaca_main.dart';
 //import 'package:vacas_front/ui/finca/finca_form.dart';
@@ -67,7 +70,7 @@ class _fiSaludUIState extends State<fiSaludUI> {
     super.initState();
     //apiService = ApiCovid();
     //api=Provider.of<PredictionApi>(context, listen: false).getPrediction();
-    print("entro aqui");
+    print("entro aqui salud");
   }
 
   final GlobalKey<AnimatedFloatingActionButtonState> key =
@@ -182,7 +185,7 @@ class _fiSaludUIState extends State<fiSaludUI> {
                     FadeAnimation(
                       0.5,
                       Text(
-                        "Mis Fincas",
+                        "Seleccione un Finca: Salud Ganado",
                         style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
                     )
@@ -234,7 +237,7 @@ class _fiSaludUIState extends State<fiSaludUI> {
                                 onPressed: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return MainProLeche(); //MainSaludVaca
+                                    return MainSaludVaca(); //MainSaludVaca
                                   }));
                                 },
                                 child: Text(
@@ -285,12 +288,9 @@ class _fiSaludUIState extends State<fiSaludUI> {
             text: tabs[0],
             isSelected: selectedPosition == 0,
             onTap: () {
-              setState(() {
-                selectedPosition = 0;
-              });
-              /*Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HelpScreen();
-              }));*/
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainFinca();
+              }));
             },
           ),
           TabItem(
@@ -318,9 +318,9 @@ class _fiSaludUIState extends State<fiSaludUI> {
             icon: Icons.settings,
             isSelected: selectedPosition == 3,
             onTap: () {
-              setState(() {
-                selectedPosition = 3;
-              });
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainAnalitic();
+              }));
             },
           ),
         ],
@@ -371,7 +371,7 @@ class _fiSaludUIState extends State<fiSaludUI> {
           ),
           TabItem(
             text: tabs[3],
-            icon: Icons.settings,
+            icon: Icons.assignment,
             isSelected: selectedPosition == 3,
             onTap: () {
               setState(() {

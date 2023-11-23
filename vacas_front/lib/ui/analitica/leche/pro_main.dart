@@ -12,6 +12,7 @@ import 'package:vacas_front/modelo/ProLecheModelo.dart';
 import 'package:vacas_front/modelo/VacaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/ui/analitica/analitica_main.dart';
+import 'package:vacas_front/ui/analitica/leche/pro_form.dart';
 import 'package:vacas_front/ui/finca/finca_form.dart';
 import 'package:vacas_front/ui/help_screen.dart';
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
@@ -61,7 +62,7 @@ class _ProLecheUIState extends State<ProLecheUI> {
   final GlobalKey<AnimatedFloatingActionButtonState> key =
       GlobalKey<AnimatedFloatingActionButtonState>();
 
-  String text = 'Vacas';
+  String text = 'ProLeche';
   String subject = '';
   List<String> imageNames = [];
   List<String> imagePaths = [];
@@ -127,7 +128,7 @@ class _ProLecheUIState extends State<ProLecheUI> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => VacasForm()),
+                MaterialPageRoute(builder: (context) => ProLecheForm()),
               );
             },
             backgroundColor: Colors.grey.shade400,
@@ -158,7 +159,7 @@ class _ProLecheUIState extends State<ProLecheUI> {
                     width: double.infinity,
                     child: FadeAnimation(
                         0.5,
-                        Text(
+                        const Text(
                           "Producción leche",
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 30),
@@ -169,15 +170,15 @@ class _ProLecheUIState extends State<ProLecheUI> {
                   children: [
                     FadeAnimation(
                         0.5,
-                        Text(
+                        const Text(
                           "Producción",
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.w500),
                         )),
                     FadeAnimation(
                         0.5,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
                               vertical: 18.0, horizontal: 0.0),
                           child: Column(
                             children: [
@@ -220,7 +221,7 @@ class _ProLecheUIState extends State<ProLecheUI> {
                                   )
                                 ],
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -246,62 +247,68 @@ class _ProLecheUIState extends State<ProLecheUI> {
                         ))
                   ],
                 ),
-                Column(
-                  children: [
-                    FadeAnimation(
-                      0.5,
-                      Text(
-                        "Vacas",
-                        style: TextStyle(color: Colors.black, fontSize: 20),
-                      ),
-                    )
-                  ],
+                FadeAnimation(
+                  0.5,
+                  Column(
+                    children: [
+                      FadeAnimation(
+                        0.5,
+                        const Text(
+                          "Vacas",
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-          Expanded(
-            child: Card(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  columns: [
-                    DataColumn(label: Text("Fecha Ordeño")),
-                    DataColumn(label: Text("Nro.Arete")),
-                    DataColumn(label: Text("Finca"), numeric: true),
-                    DataColumn(label: Text("Cantidad Leche")),
-                    DataColumn(label: Text("Calidad Leche")),
-                    DataColumn(label: Text("Observaciones")),
-                  ],
-                  rows: List.generate(
-                    persona.length,
-                    (index) {
-                      ProLecheRespModelo personax = persona[index];
-                      return DataRow(
-                        selected: true,
-                        cells: [
-                          DataCell(
-                            Text(personax.fechaRegistro),
-                            showEditIcon: true,
-                          ),
-                          DataCell(
-                            Text(personax.vacaId.noArete),
-                          ),
-                          DataCell(
-                            Text(personax.vacaId.fincaId.nombreFinca),
-                          ),
-                          DataCell(
-                            Text(personax.cantidadLeche),
-                          ),
-                          DataCell(
-                            Text(personax.calidadLeche),
-                          ),
-                          DataCell(
-                            Text(personax.observaciones),
-                          ),
-                        ],
-                      );
-                    },
+          FadeAnimation(
+            0.5,
+            Expanded(
+              child: Card(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columns: [
+                      DataColumn(label: Text("Fecha Ordeño")),
+                      DataColumn(label: Text("Nro.Arete")),
+                      DataColumn(label: Text("Finca"), numeric: true),
+                      DataColumn(label: Text("Cantidad Leche")),
+                      DataColumn(label: Text("Calidad Leche")),
+                      DataColumn(label: Text("Observaciones")),
+                    ],
+                    rows: List.generate(
+                      persona.length,
+                      (index) {
+                        ProLecheRespModelo personax = persona[index];
+                        return DataRow(
+                          selected: true,
+                          cells: [
+                            DataCell(
+                              Text(personax.fechaRegistro),
+                              showEditIcon: true,
+                            ),
+                            DataCell(
+                              Text(personax.vacaId.noArete),
+                            ),
+                            DataCell(
+                              Text(personax.vacaId.fincaId.nombreFinca),
+                            ),
+                            DataCell(
+                              Text(personax.cantidadLeche),
+                            ),
+                            DataCell(
+                              Text(personax.calidadLeche),
+                            ),
+                            DataCell(
+                              Text(personax.observaciones),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -361,7 +368,7 @@ class _ProLecheUIState extends State<ProLecheUI> {
           ),
           TabItem(
             text: tabs[3],
-            icon: Icons.settings,
+            icon: Icons.assignment,
             isSelected: selectedPosition == 3,
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {

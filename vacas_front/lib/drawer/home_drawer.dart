@@ -39,25 +39,20 @@ class _HomeDrawerState extends State<HomeDrawer> {
           //isAssetsImage: true,
           icon: Icon(Icons.person)),
       DrawerList(
-        index: DrawerIndex.Help,
+        index: DrawerIndex.VACA,
         labelName: 'Vacas',
         icon: Icon(Icons.help),
       ),
       DrawerList(
-        index: DrawerIndex.Invite,
-        labelName: 'Actividad Bloc Fire',
-        icon: Icon(Icons.group),
+        index: DrawerIndex.INFO,
+        labelName: 'Informe',
+        icon: Icon(Icons.assignment),
       ),
       /*DrawerList(
         index: DrawerIndex.Share,
         labelName: 'Rate the app',
         icon: Icon(Icons.share),
       ),*/
-      DrawerList(
-        index: DrawerIndex.About,
-        labelName: 'Información',
-        icon: Icon(Icons.info),
-      ),
     ];
   }
 
@@ -288,10 +283,8 @@ enum DrawerIndex {
   HOME,
   USER,
   Help,
-  Share,
-  About,
-  Invite,
-  Testing,
+  VACA,
+  INFO,
 }
 
 class DrawerList {

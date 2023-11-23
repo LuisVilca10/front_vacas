@@ -129,7 +129,7 @@ class _VacaApi implements VacaApi {
   }
 
   @override
-  Future<VacaModelo> updateFinca(
+  Future<VacaRespModelo> updateFinca(
     String token,
     int id,
     VacaModelo vaca,
@@ -141,7 +141,7 @@ class _VacaApi implements VacaApi {
     final _data = <String, dynamic>{};
     _data.addAll(vaca.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VacaModelo>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<VacaRespModelo>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
@@ -153,7 +153,7 @@ class _VacaApi implements VacaApi {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VacaModelo.fromJson(_result.data!);
+    final value = VacaRespModelo.fromJson(_result.data!);
     return value;
   }
 
