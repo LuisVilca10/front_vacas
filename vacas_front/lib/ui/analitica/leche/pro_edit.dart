@@ -1,35 +1,38 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
 import 'package:vacas_front/apis/proleche_api.dart';
-import 'package:vacas_front/apis/saludvaca_api.dart';
 
 import 'package:vacas_front/componets/DropDownFormField.dart';
 import 'package:intl/intl.dart';
 import 'package:vacas_front/modelo/ProLecheModelo.dart';
-import 'package:vacas_front/modelo/SaludVaca.dart';
 import 'package:vacas_front/ui/analitica/leche/pro_main.dart';
-import 'package:vacas_front/ui/analitica/salud/salud_main.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
-class SaludVacaForm extends StatefulWidget {
+class ProLecheFormEdit extends StatefulWidget {
+  ProLecheRespModelo modelP;
+  ProLecheFormEdit({required this.modelP}) : super();
+
   @override
-  _SaludVacaFormState createState() => _SaludVacaFormState();
+  _ProLecheFormEditState createState() =>
+      _ProLecheFormEditState(modelP: modelP);
 }
 
-class _SaludVacaFormState extends State<SaludVacaForm> {
+class _ProLecheFormEditState extends State<ProLecheFormEdit> {
+  ProLecheRespModelo modelP;
+  _ProLecheFormEditState({required this.modelP}) : super();
   bool showProfileInfo = false;
-  late int _frecuencia;
-  late String _peso;
-  late String _sintomas = "";
-  late String _tipovacu = "";
+
+  late String _cantidadLeche = "";
+  late String _calidad = "";
+  late String _observaciones = "";
+  late String _registo = "";
   //late String _sexo = "";
 
-  TextEditingController _fecharegistro = new TextEditingController();
+  TextEditingController _fechaOrdeno = new TextEditingController();
   DateTime? selectedDate;
 
   //TextEditingController _horai = new TextEditingController();
@@ -56,23 +59,23 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
     isMultipleSelection: true,
   );
   void capturaFecha(valor) {
-    this._fecharegistro.text = valor;
+    this._fechaOrdeno.text = valor;
   }
 
-  void capturaPeso(valor) {
-    this._peso = valor;
+  void capturaCalidad(valor) {
+    this._calidad = valor;
   }
 
-  void capturaFrecuencia(valor) {
-    this._frecuencia = valor;
+  void capturaCantidad(valor) {
+    this._cantidadLeche = valor;
   }
 
-  void capturaSintomas(valor) {
-    this._sintomas = valor;
+  void capturaObeservaciones(valor) {
+    this._observaciones = valor;
   }
 
-  void capturaTipoVacuna(valor) {
-    this._tipovacu = valor;
+  void capturaRegistro(valor) {
+    this._registo = valor;
   }
 
   void capturVaca(int valor) {
@@ -106,34 +109,38 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Form. Salud Vaca",
+                        "Form. Produccion Leche",
                         style: TextStyle(color: Colors.black, fontSize: 30),
                       ),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoFecha(capturaFecha, "Fecha de Registro:"),
+                      _buildDatoFecha(capturaFecha, "Fecha de Ordeño:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoNombre(capturaPeso, "Peso Vaca:"),
+                      _buildDatoCalidad(capturaCantidad, modelP.cantidadLeche,
+                          "Cantidad Leche:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoNumber(
-                          capturaFrecuencia, "Frecuencia Cardiaca:"),
+                      _buildDatoLeche(capturaCalidad, modelP.calidadLeche,
+                          "Calidad Leche:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoNombre(capturaSintomas, "Sintomas:"),
+                      _buildObserva(capturaObeservaciones, modelP.observaciones,
+                          "Obeservaciones:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoNombre(capturaTipoVacuna, "Tipo de Vacuna:"),
+                      _buildDatoReque(capturaRegistro, modelP.registroOrdeno,
+                          "Registro Ordeño:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoEntero(capturVaca, "Vaca ID:"),
+                      _buildDatoEntero(
+                          capturVaca, modelP.vacaId.nombreVaca, "Vaca ID:"),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
@@ -153,30 +160,34 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
                                     ),
                                   );
                                   _formKey.currentState!.save();
-                                  SaludVacaModelo mp =
-                                      new SaludVacaModelo.unlaunched();
+                                  ProLecheModelo mp =
+                                      new ProLecheModelo.unlaunched();
                                   mp.id = 0;
                                   mp.fechaRegistro = DateFormat('yyyy-MM-dd')
                                       .format(DateTime.parse(
-                                          _fecharegistro.value.text));
-
-                                  mp.frecuenciaCardiaca = _frecuencia;
-                                  mp.peso = _peso;
-                                  mp.sintomas = _sintomas;
-                                  mp.vacunaciones = _tipovacu;
+                                          _fechaOrdeno.value.text));
+                                  //print(DateFormat('yyyy-MM-dd').format(currentTime));
+                                  mp.cantidadLeche = _cantidadLeche;
+                                  mp.calidadLeche = _calidad;
+                                  mp.observaciones = _observaciones;
+                                  mp.registroOrdeno = _registo;
+                                  //FincaModelo finca=FincaModelo.unlaunched();
+                                  //finca.id=_finca;
                                   mp.vacaId = _vaca;
 
-                                  var api = await Provider.of<SaludVacaApi>(
+                                  /*final prefs =
+                                      await SharedPreferences.getInstance();
+                                  print("ver: ${mp.toJson()}");*/
+                                  var api = await Provider.of<ProLecheApi>(
                                           context,
                                           listen: false)
-                                      .crearSaludVaca(TokenUtil.TOKEN, mp);
+                                      .crearProLeche(TokenUtil.TOKEN, mp);
 
                                   if (api.toJson() != null) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              MainSaludVaca()),
+                                          builder: (context) => MainProLeche()),
                                     );
                                   }
                                 } else {
@@ -200,13 +211,14 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
     );
   }
 
-  Widget _buildDatoEntero(Function obtValor, String label) {
+  Widget _buildDatoEntero(Function obtValor, String _dato, String label) {
     return TextFormField(
       decoration: InputDecoration(
           labelText: label,
           prefixIcon: const Icon(Icons.home),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           filled: true),
+      initialValue: _dato,
       keyboardType: TextInputType.number,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -244,7 +256,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
     );
   }
 
-  Widget _buildDatoCalidd(Function obtValor, String label) {
+  Widget _buildDatoCalidad(Function obtValor, String _dato, String label) {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
@@ -254,6 +266,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
         ),
         filled: true,
       ),
+      initialValue: _dato,
       keyboardType: TextInputType.text,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -262,12 +275,12 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
         return null;
       },
       onSaved: (String? value) {
-        obtValor(int.parse(value!));
+        obtValor(value!);
       },
     );
   }
 
-  Widget _buildDatoNombre(Function obtValor, String label) {
+  Widget _buildDatoLeche(Function obtValor, String _dato, String label) {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
@@ -277,6 +290,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
         ),
         filled: true,
       ),
+      initialValue: _dato,
       keyboardType: TextInputType.text,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -290,7 +304,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
     );
   }
 
-  Widget _buildDatoRaza(Function obtValor, String label) {
+  Widget _buildObserva(Function obtValor, String _dato, String label) {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
@@ -300,6 +314,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
         ),
         filled: true,
       ),
+      initialValue: _dato,
       keyboardType: TextInputType.text,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -340,7 +355,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
     );
   }
 
-  Widget _buildDatosexo(Function obtValor, String label) {
+  Widget _buildDatoReque(Function obtValor, String _dato, String label) {
     return TextFormField(
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.swipe_left_alt),
@@ -351,6 +366,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
         ),
         filled: true,
       ),
+      initialValue: _dato,
       keyboardType: TextInputType.text,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -382,7 +398,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
         return null;
       },
       onSaved: (String? value) {
-        obtValor(int.parse(value!));
+        obtValor(value!);
       },
     );
   }
@@ -443,7 +459,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
           labelText: label,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-      controller: _fecharegistro,
+      controller: _fechaOrdeno,
       keyboardType: TextInputType.datetime,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -472,7 +488,7 @@ class _SaludVacaFormState extends State<SaludVacaForm> {
         selectedDate = pickedDate;
         String formattedDate =
             "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
-        _fecharegistro.text = formattedDate;
+        _fechaOrdeno.text = formattedDate;
         obtValor(formattedDate);
       });
     }

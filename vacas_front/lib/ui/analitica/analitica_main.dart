@@ -1,22 +1,17 @@
-import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+
 import 'package:vacas_front/animation/FadeAnimation.dart';
-import 'package:vacas_front/apis/finca_api.dart';
-import 'package:vacas_front/apis/vaca_api.dart';
+
 import 'package:vacas_front/componets/TabItem.dart';
-import 'package:vacas_front/modelo/FincaModelo.dart';
-import 'package:vacas_front/modelo/VacaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
-import 'package:vacas_front/ui/analitica/leche/fileche_main.dart';
-import 'package:vacas_front/ui/analitica/salud/fisalud_main.dart';
+
+import 'package:vacas_front/ui/analitica/leche/pro_main.dart';
+
+import 'package:vacas_front/ui/analitica/salud/salud_main.dart';
 import 'package:vacas_front/ui/finca/finca_main.dart';
-import 'package:vacas_front/ui/help_screen.dart';
+
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
 import 'package:vacas_front/ui/vacas/vaca_main.dart';
-import 'package:vacas_front/ui/vacas/vacas_form.dart';
-import 'package:vacas_front/util/TokenUtil.dart';
 
 class MainAnalitic extends StatelessWidget {
   const MainAnalitic({super.key});
@@ -175,7 +170,7 @@ class _AnaliticUIState extends State<AnaliticUI> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MainfiLeche()),
+                                    builder: (context) => MainProLeche()),
                               );
                             },
                             child: Text(
@@ -277,7 +272,7 @@ class _AnaliticUIState extends State<AnaliticUI> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MainfiSalud()),
+                                    builder: (context) => MainSaludVaca()),
                               );
                             },
                             child: Text(

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
 import 'package:vacas_front/apis/finca_api.dart';
 import 'package:vacas_front/apis/persona_api.dart';
+import 'package:vacas_front/apis/rol_api.dart';
 import 'package:vacas_front/bloc/finca/finca_bloc.dart';
 import 'package:vacas_front/componets/DropDownFormField.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
@@ -27,6 +28,7 @@ class _UsuarioFormState extends State<UsuarioForm> {
   late String _nombreUsuario = "";
   late String _apellido = "";
   late String _telefono = "";
+  String rolString = '0';
 
   TextEditingController _fecha = new TextEditingController();
   DateTime? selectedDate;
@@ -49,10 +51,13 @@ class _UsuarioFormState extends State<UsuarioForm> {
   late String _userCreate;
   var _data = [];
 
-  /*List<Map<String, String>> listaUser = [
-    {'value': 'PF', 'display': 'Producción Juan'},
-    {'value': 'MC', 'display': 'Producción Micaela'},
-  ];*/
+  List<Map<String, String>> listaUser = [
+    {'value': '0', 'display': 'Seleccionar'},
+    {'value': '1', 'display': 'ROLE_ADMIN'},
+    {'value': '2', 'display': 'ROLE_USER'},
+    {'value': '3', 'display': 'ROLE_EMPLOYEE'},
+  ];
+
   List<Map<String, String>> listapro = [
     {'value': 'PL', 'display': 'Producción Leche'},
     {'value': 'PC', 'display': 'Producción Carne'},
@@ -61,6 +66,25 @@ class _UsuarioFormState extends State<UsuarioForm> {
   @override
   void initState() {
     super.initState();
+    _jalarrol();
+  }
+
+  late RolApi personapi;
+  _jalarrol() async {
+    setState(() {
+      personapi = RolApi.create();
+      Provider.of<RolApi>(context, listen: false)
+          .getRol(TokenUtil.TOKEN)
+          .then((value) {
+        value.forEach((element) {
+          listaUser.add({
+            'value': element.id.toString(),
+            'display': element.id.toString()
+          });
+        });
+      });
+    });
+    await Future.delayed(Duration(seconds: 1));
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -87,7 +111,7 @@ class _UsuarioFormState extends State<UsuarioForm> {
   }
 
   void capturaTipoUsuario(valor) {
-    this._tipousuario = valor;
+    this.rolString = valor;
   }
 
   void capturaMedidaLeche(valor) {
@@ -173,8 +197,8 @@ class _UsuarioFormState extends State<UsuarioForm> {
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoTipoUser(
-                          capturaTipoUsuario, "Tipo de Usuario:"),
+                      _buildDatoLista(capturaTipoUsuario, rolString,
+                          "Tipo de Usuario:", listaUser),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
@@ -205,7 +229,8 @@ class _UsuarioFormState extends State<UsuarioForm> {
                                   //mp.fecha = DateFormat('yyyy-MM-dd').format(
                                   //   DateTime.parse(_fecha.value.text));
                                   mp.password = _password;
-                                  mp.token = _tipousuario;
+                                  mp.token = rolString;
+                                  mp.telefono = _telefono;
                                   mp.perfilPrin = _perfil_prin;
                                   mp.offlinex = _offlinex;
                                   mp.estado = _estado;

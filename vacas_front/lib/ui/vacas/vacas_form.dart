@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
+import 'package:vacas_front/apis/finca_api.dart';
 
 import 'package:vacas_front/apis/vaca_api.dart';
 import 'package:vacas_front/componets/DropDownFormField.dart';
@@ -31,6 +34,7 @@ class _VacasFormState extends State<VacasForm> {
 
   //TextEditingController _horai = new TextEditingController();
   //TimeOfDay? selectedTime;
+  String fincaString = '0';
 
   late int _finca;
   late String _raza = "";
@@ -41,12 +45,32 @@ class _VacasFormState extends State<VacasForm> {
   Position? currentPosition;
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
+  List<Map<String, String>> user = [
+    {'value': '0', 'display': 'Seleccione'},
+  ];
   late String _userCreate;
   var _data = [];
 
   @override
   void initState() {
     super.initState();
+    _jalarfinca();
+  }
+
+  late FincaApi personapi;
+  _jalarfinca() async {
+    setState(() {
+      personapi = FincaApi.create();
+      Provider.of<FincaApi>(context, listen: false)
+          .getFinca(TokenUtil.TOKEN)
+          .then((value) {
+        value.forEach((element) {
+          user.add(
+              {'value': element.id.toString(), 'display': element.nombreFinca});
+        });
+      });
+    });
+    await Future.delayed(Duration(seconds: 1));
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -72,8 +96,8 @@ class _VacasFormState extends State<VacasForm> {
     this._sexo = valor;
   }
 
-  void capturFinca(int valor) {
-    this._finca = valor;
+  void capturFinca(valor) {
+    this.fincaString = valor;
   }
 
   void capturaRaza(valor) {
@@ -86,10 +110,6 @@ class _VacasFormState extends State<VacasForm> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        /*title: const Text(
-          "Form. Reg. Finca",
-          style: TextStyle(color: Colors.black),
-        ),*/
         backgroundColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -133,7 +153,7 @@ class _VacasFormState extends State<VacasForm> {
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoEntero(capturFinca, "Finca:"),
+                      _buildDatoLista(capturFinca, fincaString, "Finca:", user),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
@@ -165,7 +185,7 @@ class _VacasFormState extends State<VacasForm> {
                                   mp.raza = _raza;
                                   //FincaModelo finca=FincaModelo.unlaunched();
                                   //finca.id=_finca;
-                                  mp.fincaId = _finca;
+                                  mp.fincaId = int.parse(fincaString);
 
                                   final prefs =
                                       await SharedPreferences.getInstance();

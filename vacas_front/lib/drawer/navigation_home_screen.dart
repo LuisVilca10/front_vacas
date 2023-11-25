@@ -2,6 +2,7 @@ import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/drawer/drawer_user_controller.dart';
 import 'package:vacas_front/drawer/home_drawer.dart';
 import 'package:vacas_front/ui/analitica/analitica_main.dart';
+import 'package:vacas_front/ui/estadistica.dart';
 import 'package:vacas_front/ui/finca/finca_main.dart';
 //import 'package:vacas_front/ui/fincadb/finca_main.dart';
 //import 'package:asistencia_app/ui/actividadb/actividad_main.dart';
@@ -23,7 +24,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView = HelpScreen();
+    screenView = TimeseriesChartExample();
     super.initState();
   }
 

@@ -28,7 +28,9 @@ class MainVaca extends StatelessWidget {
         Provider<VacaApi>(
           create: (_) => VacaApi.create(),
         ),
-        // Provider<AsistenciapaApi>(create: (_) => AsistenciapaApi.create(),),
+        Provider<FincaApi>(
+          create: (_) => FincaApi.create(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

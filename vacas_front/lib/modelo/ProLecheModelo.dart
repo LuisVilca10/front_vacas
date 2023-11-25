@@ -27,7 +27,7 @@ class ProLecheModelo {
     fechaRegistro = json['fechaRegistro'];
     cantidadLeche = json['cantidadLeche'];
     calidadLeche = json['calidadLeche'];
-    registroOrdeno = json['registroOrdeño'];
+    registroOrdeno = json['registroOrdeno'];
     observaciones = json['observaciones'];
     vacaId = json['vacaId'];
   }
@@ -38,7 +38,7 @@ class ProLecheModelo {
     _data['fechaRegistro'] = fechaRegistro;
     _data['cantidadLeche'] = cantidadLeche;
     _data['calidadLeche'] = calidadLeche;
-    _data['registroOrdeño'] = registroOrdeno;
+    _data['registroOrdeno'] = registroOrdeno;
     _data['observaciones'] = observaciones;
     _data['vacaId'] = vacaId;
     return _data;

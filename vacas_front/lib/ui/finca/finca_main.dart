@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
 import 'package:vacas_front/apis/finca_api.dart';
+import 'package:vacas_front/apis/persona_api.dart';
 import 'package:vacas_front/componets/TabItem.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
@@ -41,7 +42,9 @@ class MainFinca extends StatelessWidget {
         Provider<FincaApi>(
           create: (_) => FincaApi.create(),
         ),
-        // Provider<AsistenciapaApi>(create: (_) => AsistenciapaApi.create(),),
+        Provider<PersonaApi>(
+          create: (_) => PersonaApi.create(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

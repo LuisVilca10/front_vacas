@@ -9,6 +9,7 @@ class UsuarioModelo {
     required this.correo,
     required this.password,
     required this.token,
+    required this.telefono,
     required this.dni,
     required this.perfilPrin,
     required this.estado,
@@ -21,6 +22,7 @@ class UsuarioModelo {
       : nombres = "",
         apellidos = "",
         token = "",
+        telefono = "",
         dni = "",
         perfilPrin = "",
         estado = "",
@@ -28,12 +30,14 @@ class UsuarioModelo {
   UsuarioModelo.loginDos(this.correo, this.password)
       : nombres = "",
         apellidos = "";
+
   late int id = 0;
   late final String nombres;
   late final String apellidos;
   late final String correo;
   late final String password;
   late final String token;
+  late final String telefono;
   late final String dni;
   late final String perfilPrin;
   late final String estado;
@@ -47,6 +51,7 @@ class UsuarioModelo {
       correo: json['correo'],
       password: json['password'] ?? '',
       token: json['token'] ?? '',
+      telefono: json['telefono'] ?? '',
       dni: json['dni'] ?? '',
       perfilPrin: json['perfilPrin'] ?? '',
       estado: json['estado'] ?? '',
@@ -61,6 +66,7 @@ class UsuarioModelo {
     _data['correo'] = correo;
     _data['password'] = password;
     _data['token'] = token;
+    _data['telefono'] = telefono;
     _data['dni'] = dni;
     _data['perfilPrin'] = perfilPrin;
     _data['estado'] = estado;

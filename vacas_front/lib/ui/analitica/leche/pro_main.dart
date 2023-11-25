@@ -12,10 +12,13 @@ import 'package:vacas_front/modelo/ProLecheModelo.dart';
 import 'package:vacas_front/modelo/VacaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/ui/analitica/analitica_main.dart';
+import 'package:vacas_front/ui/analitica/leche/pro_edit.dart';
 import 'package:vacas_front/ui/analitica/leche/pro_form.dart';
 import 'package:vacas_front/ui/finca/finca_form.dart';
+import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/ui/help_screen.dart';
 import 'package:vacas_front/ui/usuario/usuario_main.dart';
+import 'package:vacas_front/ui/vacas/vaca_main.dart';
 import 'package:vacas_front/ui/vacas/vacas_form.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
@@ -29,7 +32,9 @@ class MainProLeche extends StatelessWidget {
         Provider<ProLecheApi>(
           create: (_) => ProLecheApi.create(),
         ),
-        // Provider<AsistenciapaApi>(create: (_) => AsistenciapaApi.create(),),
+        Provider<VacaApi>(
+          create: (_) => VacaApi.create(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -248,19 +253,23 @@ class _ProLecheUIState extends State<ProLecheUI> {
                   ],
                 ),
                 FadeAnimation(
-                  0.5,
-                  Column(
-                    children: [
-                      FadeAnimation(
-                        0.5,
-                        const Text(
-                          "Vacas",
-                          style: TextStyle(color: Colors.black, fontSize: 20),
+                    0.5,
+                    TextField(
+                      cursorColor: Color.fromARGB(124, 124, 124, 124),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.black54,
+                          size: 30,
                         ),
-                      )
-                    ],
-                  ),
-                ),
+                        hintText: "Search",
+                        fillColor: Color.fromARGB(217, 217, 217, 217),
+                        filled: true,
+                        border: UnderlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    )),
               ],
             ),
           ),
@@ -273,10 +282,13 @@ class _ProLecheUIState extends State<ProLecheUI> {
                   child: DataTable(
                     columns: [
                       DataColumn(label: Text("Fecha Ordeño")),
-                      DataColumn(label: Text("Nro.Arete")),
-                      DataColumn(label: Text("Finca"), numeric: true),
+                      DataColumn(label: Text("Finca")),
+                      DataColumn(
+                        label: Text("Nombre Vaca"),
+                      ),
+                      DataColumn(label: Text("Nro Arerte")),
                       DataColumn(label: Text("Cantidad Leche")),
-                      DataColumn(label: Text("Calidad Leche")),
+                      DataColumn(label: Text("Calidad")),
                       DataColumn(label: Text("Observaciones")),
                     ],
                     rows: List.generate(
@@ -287,14 +299,74 @@ class _ProLecheUIState extends State<ProLecheUI> {
                           selected: true,
                           cells: [
                             DataCell(
-                              Text(personax.fechaRegistro),
-                              showEditIcon: true,
-                            ),
-                            DataCell(
-                              Text(personax.vacaId.noArete),
+                              Row(
+                                children: [
+                                  Text(personax.fechaRegistro),
+                                  IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    "Mensaje de confirmacion"),
+                                                content:
+                                                    Text("Desea Eliminar?"),
+                                                actions: [
+                                                  FloatingActionButton(
+                                                    child: const Text('CANCEL'),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop('Failure');
+                                                    },
+                                                  ),
+                                                  FloatingActionButton(
+                                                      child:
+                                                          const Text('ACCEPT'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop('Success');
+                                                      })
+                                                ],
+                                              );
+                                            }).then((value) {
+                                          if (value.toString() == "Success") {
+                                            print(personax.id);
+                                            Provider.of<ProLecheApi>(context,
+                                                    listen: false)
+                                                .deleteProLeche(TokenUtil.TOKEN,
+                                                    personax.id)
+                                                .then(
+                                                    (value) => onGoBack(value));
+                                            //var onGoBack = onGoBack;
+                                            //BlocProvider.of<ProductosBloc>(context).add(DeleteProductoEvent(producto: state.productosList[index]));
+                                          }
+                                        });
+                                      },
+                                      icon: Icon(Icons.delete)),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProLecheFormEdit(
+                                                      modelP: personax)),
+                                        );
+                                      },
+                                      icon: Icon(Icons.edit))
+                                ],
+                              ),
                             ),
                             DataCell(
                               Text(personax.vacaId.fincaId.nombreFinca),
+                            ),
+                            DataCell(
+                              Text(personax.vacaId.nombreVaca),
+                            ),
+                            DataCell(
+                              Text(personax.vacaId.noArete),
                             ),
                             DataCell(
                               Text(personax.cantidadLeche),
@@ -338,12 +410,9 @@ class _ProLecheUIState extends State<ProLecheUI> {
             text: tabs[0],
             isSelected: selectedPosition == 0,
             onTap: () {
-              setState(() {
-                selectedPosition = 0;
-              });
-              /*Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HelpScreen();
-              }));*/
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainFinca();
+              }));
             },
           ),
           TabItem(
@@ -362,7 +431,7 @@ class _ProLecheUIState extends State<ProLecheUI> {
             isSelected: selectedPosition == 2,
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MainProLeche();
+                return MainVaca();
               }));
             },
           ),

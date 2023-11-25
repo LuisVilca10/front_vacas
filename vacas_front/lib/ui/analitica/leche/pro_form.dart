@@ -4,15 +4,13 @@ import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
-
+import 'package:vacas_front/apis/proleche_api.dart';
 import 'package:vacas_front/apis/vaca_api.dart';
-import 'package:vacas_front/componets/DropDownFormField.dart';
-import 'package:vacas_front/modelo/FincaModelo.dart';
-import 'package:intl/intl.dart';
-import 'package:vacas_front/modelo/VacaModelo.dart';
 
-import 'package:vacas_front/ui/usuario/usuario_main.dart';
-import 'package:vacas_front/ui/vacas/vaca_main.dart';
+import 'package:vacas_front/componets/DropDownFormField.dart';
+import 'package:intl/intl.dart';
+import 'package:vacas_front/modelo/ProLecheModelo.dart';
+import 'package:vacas_front/ui/analitica/leche/pro_main.dart';
 import 'package:vacas_front/util/TokenUtil.dart';
 
 class ProLecheForm extends StatefulWidget {
@@ -22,31 +20,54 @@ class ProLecheForm extends StatefulWidget {
 
 class _ProLecheFormState extends State<ProLecheForm> {
   bool showProfileInfo = false;
-  late String _nombreVaca = "";
-  late String _nroVaca = "";
-  late String _sexo = "";
+  //late String _nombrefinca = "";
+  //late String _nombreVaca = "";
+  //late String _nroVaca = "";
+  late String _cantidadLeche = "";
+  late String _calidad = "";
+  late String _observaciones = "";
+  late String _registo = "";
+  //late String _sexo = "";
 
-  TextEditingController _fecha = new TextEditingController();
+  TextEditingController _fechaOrdeno = new TextEditingController();
   DateTime? selectedDate;
 
   //TextEditingController _horai = new TextEditingController();
   //TimeOfDay? selectedTime;
 
-  late int _finca;
-  late String _raza = "";
-  late String _estado = "Activo";
-  late String _offlinex = "Si";
-  late String _perfil_prin = "Todo";
+  late int _vaca;
+  String vacaString = '0';
+  List<Map<String, String>> user = [
+    {'value': '0', 'display': 'Seleccione'},
+  ];
+//  late String _raza = "";
+//  late String _estado = "Activo";
+//late String _offlinex = "Si";
+// late String _perfil_prin = "Todo";
 
   Position? currentPosition;
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
-  late String _userCreate;
-  var _data = [];
-
   @override
   void initState() {
     super.initState();
+    _jalarvaca();
+  }
+
+  late VacaApi personapi;
+  _jalarvaca() async {
+    setState(() {
+      personapi = VacaApi.create();
+      Provider.of<VacaApi>(context, listen: false)
+          .getVaca(TokenUtil.TOKEN)
+          .then((value) {
+        value.forEach((element) {
+          user.add(
+              {'value': element.id.toString(), 'display': element.nombreVaca});
+        });
+      });
+    });
+    await Future.delayed(Duration(seconds: 1));
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -55,29 +76,28 @@ class _ProLecheFormState extends State<ProLecheForm> {
   GroupController multipleCheckController = GroupController(
     isMultipleSelection: true,
   );
-
-  void capturaNombreVaca(valor) {
-    this._nombreVaca = valor;
-  }
-
-  void capturaNroVaca(valor) {
-    this._nroVaca = valor;
-  }
-
   void capturaFecha(valor) {
-    this._fecha.text = valor;
+    this._fechaOrdeno.text = valor;
   }
 
-  void capturarSexo(valor) {
-    this._sexo = valor;
+  void capturaCalidad(valor) {
+    this._calidad = valor;
   }
 
-  void capturFinca(int valor) {
-    this._finca = valor;
+  void capturaCantidad(valor) {
+    this._cantidadLeche = valor;
   }
 
-  void capturaRaza(valor) {
-    this._raza = valor;
+  void capturaObeservaciones(valor) {
+    this._observaciones = valor;
+  }
+
+  void capturaRegistro(valor) {
+    this._registo = valor;
+  }
+
+  void capturVaca(valor) {
+    this.vacaString = valor;
   }
 
   @override
@@ -113,27 +133,28 @@ class _ProLecheFormState extends State<ProLecheForm> {
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoNombre(capturaNombreVaca, "Nombre Vaca:"),
+                      _buildDatoFecha(capturaFecha, "Fecha de Ordeño:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoNrArete(capturaNroVaca, "Nro.Arete:"),
+                      _buildDatoCalidd(capturaCantidad, "Cantidad Leche:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatosexo(capturarSexo, "Sexo:"),
+                      _buildDatoCalidd(capturaCalidad, "Calidad Leche:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoFecha(capturaFecha, "Fecha de Nacimineto:"),
+                      _buildDatoCalidd(
+                          capturaObeservaciones, "Obeservaciones:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoRaza(capturaRaza, "Raza de la vaca:"),
+                      _buildDatoNombre(capturaRegistro, "Registro Ordeño:"),
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoEntero(capturFinca, "Finca:"),
+                      _buildDatoLista(capturVaca, vacaString, "Vaca ID:", user),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
@@ -153,32 +174,34 @@ class _ProLecheFormState extends State<ProLecheForm> {
                                     ),
                                   );
                                   _formKey.currentState!.save();
-                                  VacaModelo mp = new VacaModelo.unlaunched();
+                                  ProLecheModelo mp =
+                                      new ProLecheModelo.unlaunched();
                                   mp.id = 0;
-                                  mp.nombreVaca = _nombreVaca;
+                                  mp.fechaRegistro = DateFormat('yyyy-MM-dd')
+                                      .format(DateTime.parse(
+                                          _fechaOrdeno.value.text));
                                   //print(DateFormat('yyyy-MM-dd').format(currentTime));
-                                  mp.sexo = _sexo;
-                                  mp.noArete = _nroVaca;
-                                  mp.feNacimiento = DateFormat('yyyy-MM-dd')
-                                      .format(
-                                          DateTime.parse(_fecha.value.text));
-                                  mp.raza = _raza;
+                                  mp.cantidadLeche = _cantidadLeche;
+                                  mp.calidadLeche = _calidad;
+                                  mp.observaciones = _observaciones;
+                                  mp.registroOrdeno = _registo;
                                   //FincaModelo finca=FincaModelo.unlaunched();
                                   //finca.id=_finca;
-                                  mp.fincaId = _finca;
+                                  mp.vacaId = int.parse(vacaString);
 
-                                  final prefs =
+                                  /*final prefs =
                                       await SharedPreferences.getInstance();
-                                  print("ver: ${mp.toJson()}");
-                                  var api = await Provider.of<VacaApi>(context,
+                                  print("ver: ${mp.toJson()}");*/
+                                  var api = await Provider.of<ProLecheApi>(
+                                          context,
                                           listen: false)
-                                      .crearVaca(TokenUtil.TOKEN, mp);
+                                      .crearProLeche(TokenUtil.TOKEN, mp);
 
                                   if (api.toJson() != null) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => MainVaca()),
+                                          builder: (context) => MainProLeche()),
                                     );
                                   }
                                 } else {
@@ -206,7 +229,7 @@ class _ProLecheFormState extends State<ProLecheForm> {
     return TextFormField(
       decoration: InputDecoration(
           labelText: label,
-          prefixIcon: Icon(Icons.home),
+          prefixIcon: const Icon(Icons.home),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           filled: true),
       keyboardType: TextInputType.number,
@@ -226,7 +249,7 @@ class _ProLecheFormState extends State<ProLecheForm> {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(Icons.person_2),
+        prefixIcon: const Icon(Icons.person_2),
         hintText: 'Ej: admin',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -246,7 +269,7 @@ class _ProLecheFormState extends State<ProLecheForm> {
     );
   }
 
-  Widget _buildDatoNrArete(Function obtValor, String label) {
+  Widget _buildDatoCalidd(Function obtValor, String label) {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
@@ -259,7 +282,7 @@ class _ProLecheFormState extends State<ProLecheForm> {
       keyboardType: TextInputType.text,
       validator: (String? value) {
         if (value!.isEmpty) {
-          return 'El Nro arete es requerido!';
+          return 'Este campo es requerido!';
         }
         return null;
       },
@@ -337,7 +360,7 @@ class _ProLecheFormState extends State<ProLecheForm> {
       },
       onSaved: (String? value) {
         //FincaModelo finca = FincaModelo(nombre: value!);
-        obtValor(_finca);
+        obtValor(_vaca);
       },
     );
   }
@@ -445,7 +468,7 @@ class _ProLecheFormState extends State<ProLecheForm> {
           labelText: label,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-      controller: _fecha,
+      controller: _fechaOrdeno,
       keyboardType: TextInputType.datetime,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -474,7 +497,7 @@ class _ProLecheFormState extends State<ProLecheForm> {
         selectedDate = pickedDate;
         String formattedDate =
             "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
-        _fecha.text = formattedDate;
+        _fechaOrdeno.text = formattedDate;
         obtValor(formattedDate);
       });
     }

@@ -14,6 +14,7 @@ import 'package:vacas_front/modelo/SaludVaca.dart';
 import 'package:vacas_front/modelo/VacaModelo.dart';
 import 'package:vacas_front/theme/AppTheme.dart';
 import 'package:vacas_front/ui/analitica/analitica_main.dart';
+import 'package:vacas_front/ui/analitica/salud/salud_form.dart';
 import 'package:vacas_front/ui/finca/finca_form.dart';
 import 'package:vacas_front/ui/finca/finca_main.dart';
 import 'package:vacas_front/ui/help_screen.dart';
@@ -65,7 +66,7 @@ class _SaludVacaUIState extends State<SaludVacaUI> {
   final GlobalKey<AnimatedFloatingActionButtonState> key =
       GlobalKey<AnimatedFloatingActionButtonState>();
 
-  String text = 'Vacas';
+  String text = 'SaludVacas';
   String subject = '';
   List<String> imageNames = [];
   List<String> imagePaths = [];
@@ -131,7 +132,7 @@ class _SaludVacaUIState extends State<SaludVacaUI> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => VacasForm()),
+                MaterialPageRoute(builder: (context) => SaludVacaForm()),
               );
             },
             backgroundColor: Colors.grey.shade400,
@@ -247,7 +248,25 @@ class _SaludVacaUIState extends State<SaludVacaUI> {
                               ),
                             ],
                           ),
-                        ))
+                        )),
+                    FadeAnimation(
+                        0.5,
+                        TextField(
+                          cursorColor: Color.fromARGB(124, 124, 124, 124),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.black54,
+                              size: 30,
+                            ),
+                            hintText: "Search",
+                            fillColor: Color.fromARGB(217, 217, 217, 217),
+                            filled: true,
+                            border: UnderlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ],
@@ -261,12 +280,14 @@ class _SaludVacaUIState extends State<SaludVacaUI> {
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
                     columns: [
-                      DataColumn(label: Text("Fecha Ordeño")),
-                      DataColumn(label: Text("Nro.Arete")),
-                      DataColumn(label: Text("Finca"), numeric: true),
-                      DataColumn(label: Text("Cantidad Leche")),
-                      DataColumn(label: Text("Calidad Leche")),
-                      DataColumn(label: Text("Observaciones")),
+                      DataColumn(label: Text("Fecha Cita")),
+                      DataColumn(label: Text("Finca")),
+                      DataColumn(label: Text("Nombre Vaca")),
+                      DataColumn(label: Text("Nro. Vaca")),
+                      DataColumn(label: Text("Peso")),
+                      DataColumn(label: Text("Frecuencia Cardiaca")),
+                      DataColumn(label: Text("Sintomas")),
+                      DataColumn(label: Text("Tipo de Vacunación")),
                     ],
                     rows: List.generate(
                       persona.length,
@@ -276,23 +297,86 @@ class _SaludVacaUIState extends State<SaludVacaUI> {
                           selected: true,
                           cells: [
                             DataCell(
-                              Text(personax.fechaRegistro),
-                              showEditIcon: true,
-                            ),
-                            DataCell(
-                              Text(personax.vacaId.noArete),
+                              Row(
+                                children: [
+                                  Text(personax.fechaRegistro),
+                                  IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    "Mensaje de confirmacion"),
+                                                content:
+                                                    Text("Desea Eliminar?"),
+                                                actions: [
+                                                  FloatingActionButton(
+                                                    child: const Text('CANCEL'),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop('Failure');
+                                                    },
+                                                  ),
+                                                  FloatingActionButton(
+                                                      child:
+                                                          const Text('ACCEPT'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop('Success');
+                                                      })
+                                                ],
+                                              );
+                                            }).then((value) {
+                                          if (value.toString() == "Success") {
+                                            print(personax.id);
+                                            Provider.of<SaludVacaApi>(context,
+                                                    listen: false)
+                                                .deleteSaludVaca(
+                                                    TokenUtil.TOKEN,
+                                                    personax.id)
+                                                .then(
+                                                    (value) => onGoBack(value));
+                                            //var onGoBack = onGoBack;
+                                            //BlocProvider.of<ProductosBloc>(context).add(DeleteProductoEvent(producto: state.productosList[index]));
+                                          }
+                                        });
+                                      },
+                                      icon: Icon(Icons.delete)),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SaludVacaForm()),
+                                        ).then(onGoBack);
+                                      },
+                                      icon: Icon(Icons.edit))
+                                ],
+                              ),
                             ),
                             DataCell(
                               Text(personax.vacaId.fincaId.nombreFinca),
                             ),
                             DataCell(
-                              Text(personax.fechaRegistro),
+                              Text(personax.vacaId.nombreVaca),
                             ),
                             DataCell(
-                              Text(personax.ultimaRevisionVeterinaria),
+                              Text(personax.vacaId.noArete),
                             ),
                             DataCell(
-                              Text(personax.ultimaRevisionVeterinaria),
+                              Text(personax.peso),
+                            ),
+                            DataCell(
+                              Text(personax.frecuenciaCardiaca.toString()),
+                            ),
+                            DataCell(
+                              Text(personax.sintomas),
+                            ),
+                            DataCell(
+                              Text(personax.vacunaciones),
                             ),
                           ],
                         );
