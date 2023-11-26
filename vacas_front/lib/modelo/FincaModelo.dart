@@ -8,6 +8,7 @@ class FincaModelo {
     required this.are,
     required this.medida,
     required this.telefono,
+    required this.propietario,
     required this.latitud,
     required this.longitud,
     required this.rol,
@@ -20,6 +21,7 @@ class FincaModelo {
   late final String are;
   late final String medida;
   late final String telefono;
+  late final String propietario;
   late final String latitud;
   late final String longitud;
   late final String rol;
@@ -30,6 +32,7 @@ class FincaModelo {
     are = json['are'];
     medida = json['medida'];
     telefono = json['telefono'];
+    propietario = json['propietario'];
     latitud = json['latitud'];
     longitud = json['longitud'];
     rol = json['rol'];
@@ -42,6 +45,7 @@ class FincaModelo {
         are: json['are'],
         medida: json['medida'],
         telefono: json['telefono'],
+        propietario: json['propietario'],
         latitud: json['latitud'],
         longitud: json['longitud'],
         rol: json['rol']);
@@ -54,6 +58,7 @@ class FincaModelo {
     _data['are'] = are;
     _data['medida'] = medida;
     _data['telefono'] = telefono;
+    _data['propietario'] = propietario;
     _data['latitud'] = latitud;
     _data['longitud'] = longitud;
     _data['rol'] = rol;

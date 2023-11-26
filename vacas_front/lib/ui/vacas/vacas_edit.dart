@@ -38,6 +38,7 @@ class _VacasFormEditState extends State<VacasFormEdit> {
 
   //TextEditingController _horai = new TextEditingController();
   //TimeOfDay? selectedTime;
+  String fincaString = '0';
 
   late int _finca;
   late String _raza = "";

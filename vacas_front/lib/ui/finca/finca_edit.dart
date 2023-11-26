@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacas_front/animation/FadeAnimation.dart';
 import 'package:vacas_front/apis/finca_api.dart';
+import 'package:vacas_front/apis/persona_api.dart';
 import 'package:vacas_front/bloc/finca/finca_bloc.dart';
 import 'package:vacas_front/componets/DropDownFormField.dart';
 import 'package:vacas_front/modelo/FincaModelo.dart';
@@ -40,7 +41,7 @@ class _FincaFormEditState extends State<FincaFormEdit> {
 
   late String _proposito = "";
   late String _meleche = "B";
-  late String _usario = "";
+  late String _usario = "0";
 
   Position? currentPosition;
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
@@ -58,7 +59,9 @@ class _FincaFormEditState extends State<FincaFormEdit> {
     {'value': 'PL', 'display': 'Producción Leche'},
     {'value': 'PC', 'display': 'Producción Carne'},
   ];
-
+  List<Map<String, String>> user = [
+    {'value': '0', 'display': 'Seleccione'},
+  ];
   List<Map<String, String>> listaMedi = [
     {'value': 'H', 'display': 'Hectáreas'},
     {'value': 'F', 'display': 'Fanegadas'},
@@ -75,7 +78,26 @@ class _FincaFormEditState extends State<FincaFormEdit> {
   @override
   void initState() {
     super.initState();
+    _jalarusuario();
     print(modelFA.nombreFinca);
+  }
+
+  late PersonaApi personapi;
+  _jalarusuario() async {
+    setState(() {
+      personapi = PersonaApi.create();
+      Provider.of<PersonaApi>(context, listen: false)
+          .getUsuario(TokenUtil.TOKEN)
+          .then((value) {
+        value.forEach((element) {
+          user.add({
+            'value': element.id.toString(),
+            'display': element.nombres + " " + element.apellidos
+          });
+        });
+      });
+    });
+    await Future.delayed(Duration(seconds: 1));
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -178,7 +200,8 @@ class _FincaFormEditState extends State<FincaFormEdit> {
                       SizedBox(
                         height: 15,
                       ),
-                      _buildDatoUsuario(capturaUsuario, "Usuario:"),
+                      _buildDatoLista(
+                          capturaUsuario, _usario, "Usuario:", user),
                       SizedBox(
                         height: 15,
                       ),
@@ -216,6 +239,7 @@ class _FincaFormEditState extends State<FincaFormEdit> {
                                   mp.are = _area;
                                   mp.rol = _proposito;
                                   mp.medida = _medida;
+                                  mp.propietario = _usario;
 
                                   //mp.rol = _evaluar;
                                   final prefs =

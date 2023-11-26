@@ -232,23 +232,11 @@ class _FincaFormState extends State<FincaForm> {
                                   mp.are = _area;
                                   mp.rol = _proposito;
                                   mp.medida = _medida;
+                                  mp.propietario = _usario;
 
                                   //mp.rol = _evaluar;
                                   final prefs =
                                       await SharedPreferences.getInstance();
-                                  //mp.userCreate =
-                                  //   "${prefs.getString('usernameLogin')}";
-                                  //  mp.asistenciaxs = [];
-                                  //   mp.mater = _materiales;
-                                  //  // mp.validInsc = _validarInsc;
-                                  //   mp.asisSubact = _asisSubAct;
-                                  //   mp.entsal = _entSal;
-                                  //   mp.offlinex = _offlienex;
-
-                                  //print("NA:${_nombreFinca}, E:${_telefono}, "
-                                  //   "F:${_fecha.value.text}  "
-                                  //   "La: ${currentPosition!.latitude}, Lo:${currentPosition!.longitude} ");
-                                  //"U:${prefs.getString('usernameLogin')} EV:${_evaluar}"
 
                                   var api = await Provider.of<FincaApi>(context,
                                           listen: false)

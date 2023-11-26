@@ -162,7 +162,8 @@ class _UsuarioFormEditState extends State<UsuarioFormEdit> {
                             width: 10,
                           ),
                           Flexible(
-                            child: _buildDatoPhone(capturaTelefono, "Celular:"),
+                            child: _buildDatoPhone(
+                                capturaTelefono, modelU.telefono, "Celular:"),
                           ),
                         ],
                       ),
@@ -207,8 +208,7 @@ class _UsuarioFormEditState extends State<UsuarioFormEdit> {
                                   mp.dni = _dni;
 
                                   mp.correo = _correo;
-                                  //mp.fecha = DateFormat('yyyy-MM-dd').format(
-                                  //   DateTime.parse(_fecha.value.text));
+                                  mp.telefono = _telefono;
                                   mp.password = _password;
                                   mp.token = _tipousuario;
                                   mp.perfilPrin = _perfil_prin;
@@ -428,7 +428,7 @@ class _UsuarioFormEditState extends State<UsuarioFormEdit> {
     );
   }
 
-  Widget _buildDatoPhone(Function obtValor, String label) {
+  Widget _buildDatoPhone(Function obtValor, String _dato, String label) {
     return TextFormField(
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.phone),
@@ -438,6 +438,7 @@ class _UsuarioFormEditState extends State<UsuarioFormEdit> {
         ),
         filled: true,
       ),
+      initialValue: _dato,
       keyboardType: TextInputType.number,
       validator: (String? value) {
         if (value!.isEmpty) {
